@@ -9,13 +9,15 @@
    "categories": [
       "Other"
    ],
-   "activationEvents": [],
+   "activationEvents": [
+      "onCommand:extension.generateCode"
+   ],
    "main": "./extension.js",
    "contributes": {
       "commands": [
          {
-            "command": "CodeXpert.helloWorld",
-            "title": "Hello World"
+            "command": "CodeXpert.generateCode",
+            "title": "Generate Code"
          }
       ]
    },

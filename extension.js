@@ -1,38 +1,50 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
+const fs = require('fs');
+const path = require('path');
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+    <script src="app.js"></script>
+</body>
+</html>
+        `;
 
-/**
- * @param {vscode.ExtensionContext} context
- */
-function activate(context) {
-   // Use the console to output diagnostic information (console.log) and errors (console.error)
-   // This line of code will only be executed once when your extension is activated
-   console.log('Congratulations, your extension "CodeXpert" is now active!');
-
-   // The command has been defined in the package.json file
-   // Now provide the implementation of the command with  registerCommand
-   // The commandId parameter must match the command field in package.json
+const activate = async context => {
    let disposable = vscode.commands.registerCommand(
-      'CodeXpert.helloWorld',
-      function () {
-         // The code you place here will be executed every time your command is executed
+      'CodeXpert.generateCode',
+      async function () {
+         if (!vscode.workspace || !vscode.workspace.workspaceFolders) {
+            return vscode.window.showErrorMessage(
+               'Please open a project folder first',
+            );
+         }
+         let folderPath = vscode.workspace.workspaceFolders[0].uri
+            .toString()
+            .split(':')[1];
 
-         // Display a message box to the user
-         vscode.window.showInformationMessage('Hello World from CodeXpert!');
+         folderPath = folderPath + '/CodeXpert/src/';
+         console.log('### folderPath', folderPath);
+
+         fs.writeFile(path.join(folderPath, 'index.html'), htmlContent, err => {
+            if (err) {
+               return console.log(err);
+            }
+            vscode.window.showWarningMessage('Created boilerplate files!');
+         });
       },
    );
 
    context.subscriptions.push(disposable);
-}
-
-// This method is called when your extension is deactivated
-function deactivate() {}
-
-module.exports = {
-   activate,
-   deactivate,
 };
+exports.activate = activate;
+
+function deactivate() {}
+exports.deactivate = deactivate;
