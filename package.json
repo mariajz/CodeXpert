@@ -19,6 +19,10 @@
          }
       ]
    },
+   "repository": {
+      "type": "git",
+      "url": "git://github.com/mariajz/CodeXpert.git"
+   },
    "scripts": {
       "lint": "eslint .",
       "pretest": "yarn run lint",
@@ -26,14 +30,17 @@
       "prettier": "prettier --write **/*.js"
    },
    "devDependencies": {
-      "@types/vscode": "^1.83.0",
       "@types/mocha": "^10.0.2",
       "@types/node": "18.x",
+      "@types/vscode": "^1.83.0",
+      "@vscode/test-electron": "^2.3.4",
       "eslint": "^8.50.0",
       "glob": "^10.3.3",
       "mocha": "^10.2.0",
-      "typescript": "^5.2.2",
-      "@vscode/test-electron": "^2.3.4",
-      "prettier": "^2.4.1"
+      "prettier": "^2.4.1",
+      "typescript": "^5.2.2"
+   },
+   "dependencies": {
+      "vsce": "^2.15.0"
    }
 }
