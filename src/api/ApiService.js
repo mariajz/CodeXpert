@@ -1,10 +1,11 @@
 import { makeApiCall } from './ApiHelper';
 
 class ApiService {
-   constructor({ method, url, queryParams }) {
+   constructor({ method, url, queryParams, data }) {
       this.method = method;
       this.url = url;
       this.queryParams = queryParams;
+      this.data = data;
    }
 
    call() {
@@ -14,6 +15,7 @@ class ApiService {
       return makeApiCall({
          url: fullUrl,
          method: this.method,
+         data: this.data,
       });
    }
 }

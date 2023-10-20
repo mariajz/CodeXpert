@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-const makeApiCall = async ({ url, method }) => {
+const makeApiCall = async ({ url, method, data }) => {
    const options = {
       method: method,
       url: url,
+      data: data,
    };
 
    try {
