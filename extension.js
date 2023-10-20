@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const vscode = require('vscode');
+const TextBisonApiService = require('./src/service/TextBisonApiService');
 
 const htmlContent = `<!DOCTYPE html>
 <html lang="en">
@@ -16,6 +17,8 @@ const htmlContent = `<!DOCTYPE html>
 </body>
 </html>
         `;
+
+const { TextBisonApi } = TextBisonApiService();
 
 const activate = async context => {
    let disposable = vscode.commands.registerCommand(
@@ -38,6 +41,8 @@ const activate = async context => {
             }
             vscode.window.showWarningMessage('Created boilerplate files!');
          });
+
+         TextBisonApi();
       },
    );
 
