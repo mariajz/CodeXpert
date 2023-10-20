@@ -1,5 +1,5 @@
-import ApiService from '../../ApiService';
-import baseUrl from '../BaseUrl';
+const ApiService = require('../../ApiService');
+const baseUrl = require('../BaseUrl');
 
 class Api extends ApiService {
    constructor({ queryParams, data }) {
@@ -12,4 +12,4 @@ class Api extends ApiService {
    }
 }
 
-export default Api;
+module.exports = Api;

@@ -1,4 +1,4 @@
-import axios from 'axios';
+const axios = require('axios');
 
 const makeApiCall = async ({ url, method, data }) => {
    const options = {
@@ -15,5 +15,4 @@ const makeApiCall = async ({ url, method, data }) => {
       throw error;
    }
 };
-
-export { makeApiCall };
+module.exports = makeApiCall;

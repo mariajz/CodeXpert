@@ -1,1 +1,5 @@
-export const mockSuccessResponse = {};
+const mockSuccessResponse = {};
+
+module.exports = {
+   mockSuccessResponse,
+};

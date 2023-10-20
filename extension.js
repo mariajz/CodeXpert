@@ -1,6 +1,6 @@
-const vscode = require('vscode');
 const fs = require('fs');
 const path = require('path');
+const vscode = require('vscode');
 
 const htmlContent = `<!DOCTYPE html>
 <html lang="en">
@@ -31,7 +31,6 @@ const activate = async context => {
             .split(':')[1];
 
          folderPath = folderPath + '/CodeXpert/src/';
-         console.log('### folderPath', folderPath);
 
          fs.writeFile(path.join(folderPath, 'index.html'), htmlContent, err => {
             if (err) {

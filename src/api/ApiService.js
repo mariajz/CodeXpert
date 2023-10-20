@@ -1,4 +1,4 @@
-import { makeApiCall } from './ApiHelper';
+const makeApiCall = require('./ApiHelper');
 
 class ApiService {
    constructor({ method, url, queryParams, data }) {
@@ -8,11 +8,11 @@ class ApiService {
       this.data = data;
    }
 
-   call() {
+   async call() {
       const urlParams = new URLSearchParams(this.queryParams);
       const queryString = urlParams.toString();
       const fullUrl = `https://${this.url}?${queryString}`;
-      return makeApiCall({
+      return await makeApiCall({
          url: fullUrl,
          method: this.method,
          data: this.data,
@@ -20,4 +20,4 @@ class ApiService {
    }
 }
 
-export default ApiService;
+module.exports = ApiService;
