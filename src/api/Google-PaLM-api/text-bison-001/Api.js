@@ -4,8 +4,8 @@ const baseUrl = require('../BaseUrl');
 class Api extends ApiService {
    constructor({ queryParams, data }) {
       super({
-         method: 'GET',
-         url: `${baseUrl}:generateText`,
+         method: 'POST',
+         url: `${baseUrl}text-bison-001:generateText`,
          queryParams: queryParams,
          data: data,
       });
