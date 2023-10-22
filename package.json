@@ -10,14 +10,19 @@
       "Other"
    ],
    "activationEvents": [
-      "onCommand:extension.generateCode"
+      "onCommand:extension.generateTemplate",
+      "onCommand:extension.callPaLMApi"
    ],
    "main": "./extension.js",
    "contributes": {
       "commands": [
          {
-            "command": "CodeXpert.generateCode",
-            "title": "Generate Code"
+            "command": "CodeXpert.generateTemplate",
+            "title": "Generate Template"
+         },
+         {
+            "command": "CodeXpert.callPaLMApi",
+            "title": "Call PaLM API"
          }
       ]
    },

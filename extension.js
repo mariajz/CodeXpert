@@ -21,8 +21,8 @@ const htmlContent = `<!DOCTYPE html>
 const { TextBisonApi } = TextBisonApiService();
 
 const activate = async context => {
-   let disposable = vscode.commands.registerCommand(
-      'CodeXpert.generateCode',
+   let generateTemplateAction = vscode.commands.registerCommand(
+      'CodeXpert.generateTemplate',
       async function () {
          if (!vscode.workspace || !vscode.workspace.workspaceFolders) {
             return vscode.window.showErrorMessage(
@@ -41,12 +41,23 @@ const activate = async context => {
             }
             vscode.window.showWarningMessage('Created boilerplate files!');
          });
+      },
+   );
 
+   let callPaLMApiAction = vscode.commands.registerCommand(
+      'CodeXpert.callPaLMApi',
+      async function () {
+         if (!vscode.workspace || !vscode.workspace.workspaceFolders) {
+            return vscode.window.showErrorMessage(
+               'Please open a project folder first',
+            );
+         }
          TextBisonApi();
       },
    );
 
-   context.subscriptions.push(disposable);
+   context.subscriptions.push(generateTemplateAction);
+   context.subscriptions.push(callPaLMApiAction);
 };
 exports.activate = activate;
 
