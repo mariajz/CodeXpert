@@ -1,63 +1,44 @@
-# CodeXpert README
+# CodeXpert
 
-## Features
+This project is an experimental endeavor for the Thoughtworks AI4SoftwareDeliveryFestival Hackathon, aimed at developing a Visual Studio Code extension that seamlessly integrates with various GenAI tools. The primary objective is to enhance the development experience by providing intelligent, generative capabilities directly within the VS Code environment.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+> This project is currently in the evolving phase. We have successfully implemented a basic framework for interaction with GenAI tools and are working towards refining the integration for a more seamless experience.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+-  VS Code
+-  PaLM Api Key: [Get your key here](https://developers.generativeai.google/tutorials/setup/)
 
-## Extension Settings
+## Supported Commands
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+-  `Generate Template`: Generates a predefined HTML template
+-  `Call PaLM API`: Calls PaLM api with a predefined prompt and displys result in vscode window
 
-For example:
+## Getting Started
 
-This extension contributes the following settings:
+#### 1. Setup the workspace
 
--  `myExtension.enable`: Enable/disable this extension.
--  `myExtension.thing`: Set to `blah` to do something.
+```
+git clone git@github.com:mariajz/CodeXpert.git
+```
 
-## Known Issues
+cd into the repo, and run `yarn`
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+Open `src/constants/constants.js` and add your PaLM Api key
 
-## Release Notes
+#### 2. Run the extension in debug mode
 
-Users appreciate release notes as you update your extension.
+-  Go to Run and Debug Tab -> run extension , the extension will now open in a new "Extension development host" window
+-  Open command pallette `Cmd + shift + P` -> type down any of the supported commands, eg: `Generate Template`
 
-### 1.0.0
+#### 3. Generate and run packaged Extension
 
-Initial release of ...
+```
+vsce package
+```
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+This generates a `.vsix` file, which can be installed and used for testing the extension locally
 
 ---
 
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
--  Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
--  Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
--  Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
--  [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
--  [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+**Happy Coding!**
