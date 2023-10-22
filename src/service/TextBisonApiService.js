@@ -1,17 +1,17 @@
 const GooglePaLMApi = require('../api/Google-PaLM-api/text-bison-001/Api');
 const vscode = require('vscode');
-const PALM_API_KEY = require('../constants/constants');
+const PALM_API_KEY = require('../constants');
 
 const TextBisonApiService = () => {
-   const sampleBody = {
-      prompt: { text: 'create a dockerfile for a react app' },
-   };
-
    const queryParams = {
       key: PALM_API_KEY,
    };
 
-   const TextBisonApi = async () => {
+   const TextBisonApi = async inputPrompt => {
+      const sampleBody = {
+         prompt: { text: inputPrompt ? inputPrompt : 'Hello' },
+      };
+
       await new GooglePaLMApi({
          queryParams: queryParams,
          data: sampleBody,

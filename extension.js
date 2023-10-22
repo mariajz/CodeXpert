@@ -45,7 +45,7 @@ const activate = async context => {
       },
    );
 
-   let callPaLMApiAction = vscode.commands.registerCommand(
+   let callPaLMApiDefaultAction = vscode.commands.registerCommand(
       'CodeXpert.callPaLMApi',
       async function () {
          if (!vscode.workspace || !vscode.workspace.workspaceFolders) {
@@ -60,13 +60,8 @@ const activate = async context => {
    let treeViewProvider = new TreeViewProvider(context);
    vscode.window.registerTreeDataProvider('codexpert', treeViewProvider);
 
-   context.subscriptions.push(
-      vscode.commands.registerCommand('CodeXpert.refreshTreeView', () =>
-         treeViewProvider.refresh(),
-      ),
-   );
    context.subscriptions.push(generateTemplateAction);
-   context.subscriptions.push(callPaLMApiAction);
+   context.subscriptions.push(callPaLMApiDefaultAction);
 };
 exports.activate = activate;
 
