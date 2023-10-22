@@ -1,4 +1,8 @@
-const getStringifiedPrompt = (prompt, values) => {
+const fs = require('fs');
+const path = require('path');
+const vscode = require('vscode');
+
+const getFilteredPrompt = (prompt, values) => {
    const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, PORT_NUMBER } = values;
 
    const filteredPrompt = prompt
@@ -8,9 +12,32 @@ const getStringifiedPrompt = (prompt, values) => {
       .replace(/DB_NAME/g, DB_NAME)
       .replace(/PORT_NUMBER/g, PORT_NUMBER);
 
-   const stringifiedPropt = JSON.stringify(filteredPrompt);
-
-   return stringifiedPropt;
+   return filteredPrompt;
 };
 
-module.exports = { getStringifiedPrompt };
+const getStringifiedPrompt = prompt => {
+   const stringifiedPrompt = JSON.stringify(prompt);
+
+   return stringifiedPrompt;
+};
+
+const generateTemplate = (content, filename) => {
+   if (!vscode.workspace || !vscode.workspace.workspaceFolders) {
+      return vscode.window.showErrorMessage(
+         'Please open a project folder first',
+      );
+   }
+   let folderPath = vscode.workspace.workspaceFolders[0].uri
+      .toString()
+      .split(':')[1];
+
+   folderPath = folderPath + '/CodeXpert/';
+
+   fs.writeFile(path.join(folderPath, filename), content, err => {
+      if (err) {
+         return console.log(err);
+      }
+      vscode.window.showWarningMessage('Created boilerplate file!');
+   });
+};
+module.exports = { getFilteredPrompt, getStringifiedPrompt, generateTemplate };

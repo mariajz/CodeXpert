@@ -1,6 +1,6 @@
 const GooglePaLMApi = require('../api/Google-PaLM-api/text-bison-001/Api');
-const vscode = require('vscode');
-const PALM_API_KEY = require('../constants');
+const { PALM_API_KEY } = require('../constants');
+const { generateTemplate } = require('../helper/helpers');
 
 const TextBisonApiService = () => {
    const queryParams = {
