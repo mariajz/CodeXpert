@@ -1,5 +1,11 @@
 const vscode = require('vscode');
 
+class CustomButtonTreeItem extends vscode.TreeItem {
+   constructor(command) {
+      super(command.title, vscode.TreeItemCollapsibleState.None);
+      this.command = command;
+   }
+}
 class TreeViewProvider {
    constructor(context) {
       this._onDidChangeTreeData = new vscode.EventEmitter();
@@ -11,8 +17,17 @@ class TreeViewProvider {
       return element;
    }
 
-   getChildren() {
-      return [new vscode.TreeItem('Child 1'), new vscode.TreeItem('Child 2')];
+   getChildren(element) {
+      if (element) {
+         return Promise.resolve([]);
+      } else {
+         return Promise.resolve([
+            new CustomButtonTreeItem({
+               command: 'CodeXpert.generateTemplate',
+               title: 'Generate Templates',
+            }),
+         ]);
+      }
    }
 
    refresh() {
