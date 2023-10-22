@@ -24,7 +24,24 @@
             "command": "CodeXpert.callPaLMApi",
             "title": "Call PaLM API"
          }
-      ]
+      ],
+      "viewsContainers": {
+         "activitybar": [
+            {
+               "id": "codexpert",
+               "title": "CodeXpert",
+               "icon": "./assets/tw.png"
+            }
+         ]
+      },
+      "views": {
+         "codexpert": [
+            {
+               "id": "codexpert",
+               "name": "codexpert"
+            }
+         ]
+      }
    },
    "repository": {
       "type": "git",

@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const vscode = require('vscode');
 const TextBisonApiService = require('./src/service/TextBisonApiService');
+const TreeViewProvider = require('./src/helper/TreeViewProvider');
 
 const htmlContent = `<!DOCTYPE html>
 <html lang="en">
@@ -56,6 +57,18 @@ const activate = async context => {
       },
    );
 
+   let treeViewProvider = new TreeViewProvider(context);
+   vscode.window.registerTreeDataProvider('codexpert', treeViewProvider);
+
+   vscode.commands.registerCommand('CodeXpert.showSideBar', () => {
+      vscode.commands.executeCommand('workbench.view.CodeXpert.codexpert');
+   });
+
+   context.subscriptions.push(
+      vscode.commands.registerCommand('CodeXpert.refreshTreeView', () =>
+         treeViewProvider.refresh(),
+      ),
+   );
    context.subscriptions.push(generateTemplateAction);
    context.subscriptions.push(callPaLMApiAction);
 };
