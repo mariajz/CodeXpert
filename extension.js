@@ -60,10 +60,6 @@ const activate = async context => {
    let treeViewProvider = new TreeViewProvider(context);
    vscode.window.registerTreeDataProvider('codexpert', treeViewProvider);
 
-   vscode.commands.registerCommand('CodeXpert.showSideBar', () => {
-      vscode.commands.executeCommand('workbench.view.CodeXpert.codexpert');
-   });
-
    context.subscriptions.push(
       vscode.commands.registerCommand('CodeXpert.refreshTreeView', () =>
          treeViewProvider.refresh(),
