@@ -40,4 +40,15 @@ const generateTemplate = (content, filename) => {
       vscode.window.showWarningMessage('Created boilerplate file!');
    });
 };
-module.exports = { getFilteredPrompt, getStringifiedPrompt, generateTemplate };
+
+const getHTMLContentForPrompt = (baseHTML, filteredPrompt) => {
+   const result = baseHTML.replace(/FILTERED_PROMPT/g, filteredPrompt);
+   return result;
+};
+
+module.exports = {
+   getFilteredPrompt,
+   getStringifiedPrompt,
+   generateTemplate,
+   getHTMLContentForPrompt,
+};

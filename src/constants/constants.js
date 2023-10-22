@@ -15,4 +15,17 @@ const htmlContent = `<!DOCTYPE html>
 </html>
         `;
 
-module.exports = { PALM_API_KEY, htmlContent };
+const baseHTML = ` <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Input Prompt</title>
+</head>
+<body>
+    <h1>Sample Prompt</h1>
+    <p>FILTERED_PROMPT</p>
+</body>
+</html>`;
+
+module.exports = { PALM_API_KEY, htmlContent, baseHTML };

@@ -5,8 +5,9 @@ const {
    getFilteredPrompt,
    getStringifiedPrompt,
    generateTemplate,
+   getHTMLContentForPrompt,
 } = require('./src/helper/helpers');
-const { htmlContent } = require('./src/constants');
+const { htmlContent, baseHTML } = require('./src/constants');
 const Prompts = require('./src/prompts/Prompts');
 
 const { TextBisonApi } = TextBisonApiService();
@@ -53,21 +54,8 @@ const activate = async context => {
             vscode.ViewColumn.One,
             {},
          );
+         panel.webview.html = getHTMLContentForPrompt(baseHTML, filteredPrompt);
 
-         panel.webview.html = `
-         <!DOCTYPE html>
-         <html lang="en">
-         <head>
-             <meta charset="UTF-8">
-             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-             <title>Sample Input Prompt</title>
-         </head>
-         <body>
-             <h2>Sample Prompt</h2>
-             <p>${filteredPrompt}</p>
-         </body>
-         </html>
-     `;
          let inputPrompt = getStringifiedPrompt(filteredPrompt);
          TextBisonApi(inputPrompt, '.dockerfile');
       },
