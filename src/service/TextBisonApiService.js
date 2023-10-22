@@ -7,7 +7,7 @@ const TextBisonApiService = () => {
       key: PALM_API_KEY,
    };
 
-   const TextBisonApi = async inputPrompt => {
+   const TextBisonApi = async (inputPrompt, filename) => {
       const sampleBody = {
          prompt: { text: inputPrompt ? inputPrompt : 'Hello' },
       };
@@ -18,9 +18,9 @@ const TextBisonApiService = () => {
       })
          .call()
          .then(response => {
-            vscode.window.showWarningMessage(
-               'response from PaLM API:',
-               response.candidates[0].output,
+            generateTemplate(
+               response.candidates[0].output.replace(/^```|```$/g, ''),
+               filename,
             );
          })
          .catch(error => {
