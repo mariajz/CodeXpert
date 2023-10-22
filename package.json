@@ -23,6 +23,10 @@
          {
             "command": "CodeXpert.callPaLMApi",
             "title": "Call PaLM API"
+         },
+         {
+            "command": "CodeXpert.createDockerFile",
+            "title": "Create Docker File"
          }
       ],
       "viewsContainers": {

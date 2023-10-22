@@ -26,6 +26,10 @@ class TreeViewProvider {
                command: 'CodeXpert.generateTemplate',
                title: 'Generate Templates',
             }),
+            new CustomButtonTreeItem({
+               command: 'CodeXpert.createDockerFile',
+               title: 'Create Docker File',
+            }),
          ]);
       }
    }

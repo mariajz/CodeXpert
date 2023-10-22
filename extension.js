@@ -3,6 +3,8 @@ const path = require('path');
 const vscode = require('vscode');
 const TextBisonApiService = require('./src/service/TextBisonApiService');
 const TreeViewProvider = require('./src/helper/TreeViewProvider');
+const { getStringifiedPrompt } = require('./src/helper/helpers');
+const Prompts = require('./src/prompts/Prompts');
 
 const htmlContent = `<!DOCTYPE html>
 <html lang="en">
@@ -57,11 +59,32 @@ const activate = async context => {
       },
    );
 
+   let createDockerFileAction = vscode.commands.registerCommand(
+      'CodeXpert.createDockerFile',
+      async function () {
+         if (!vscode.workspace || !vscode.workspace.workspaceFolders) {
+            return vscode.window.showErrorMessage(
+               'Please open a project folder first',
+            );
+         }
+         const inputPrompt = getStringifiedPrompt(Prompts.CREATE_DOCKER_FILE, {
+            DB_HOST: 'localhost',
+            DB_USER: 'admin',
+            DB_PASSWORD: 'password123',
+            DB_NAME: 'my_database',
+            PORT_NUMBER: 3306,
+         });
+
+         TextBisonApi(inputPrompt);
+      },
+   );
+
    let treeViewProvider = new TreeViewProvider(context);
    vscode.window.registerTreeDataProvider('codexpert', treeViewProvider);
 
    context.subscriptions.push(generateTemplateAction);
    context.subscriptions.push(callPaLMApiDefaultAction);
+   context.subscriptions.push(createDockerFileAction);
 };
 exports.activate = activate;
 
