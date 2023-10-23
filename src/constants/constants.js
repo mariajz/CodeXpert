@@ -28,4 +28,20 @@ const baseHTML = ` <!DOCTYPE html>
 </body>
 </html>`;
 
-module.exports = { PALM_API_KEY, htmlContent, baseHTML };
+const regexMap = {
+   DB_HOST: /^[a-zA-Z0-9]+$/,
+   DB_USER: /^[a-zA-Z0-9]+$/,
+   DB_PASSWORD: /^[a-zA-Z0-9]+$/,
+   DB_NAME: /^[a-zA-Z]+$/,
+   PORT_NUMBER: /^\d+$/,
+};
+
+let validValues = {
+   DB_HOST: null,
+   DB_USER: null,
+   DB_PASSWORD: null,
+   DB_NAME: null,
+   PORT_NUMBER: null,
+};
+
+module.exports = { PALM_API_KEY, htmlContent, baseHTML, regexMap, validValues };

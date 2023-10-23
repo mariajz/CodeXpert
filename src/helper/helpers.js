@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const vscode = require('vscode');
+const { regexMap, validValues } = require('../constants/constants');
 
 const getFilteredPrompt = (prompt, values) => {
    const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, PORT_NUMBER } = values;
@@ -46,9 +47,41 @@ const getHTMLContentForPrompt = (baseHTML, filteredPrompt) => {
    return result;
 };
 
+const properties = Object.keys(validValues);
+const getUserInput = async index => {
+   if (index >= properties.length) {
+      return validValues;
+   }
+
+   const propertyName = properties[index];
+
+   const text = await vscode.window.showInputBox({
+      placeHolder: propertyName,
+      validateInput: text => {
+         const regex = regexMap[propertyName];
+         const isValid = regex.test(text);
+         if (isValid) {
+            validValues[propertyName] = text;
+         }
+         return isValid ? null : 'Invalid input';
+      },
+   });
+
+   if (text !== undefined) {
+      await getUserInput(index + 1);
+   } else {
+      vscode.window.showErrorMessage(
+         'Input sequence cancelled, terminating...',
+      );
+      return undefined;
+   }
+   return validValues;
+};
+
 module.exports = {
    getFilteredPrompt,
    getStringifiedPrompt,
    generateTemplate,
    getHTMLContentForPrompt,
+   getUserInput,
 };

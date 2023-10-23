@@ -6,50 +6,12 @@ const {
    getStringifiedPrompt,
    generateTemplate,
    getHTMLContentForPrompt,
+   getUserInput,
 } = require('./src/helper/helpers');
 const { htmlContent, baseHTML } = require('./src/constants');
 const Prompts = require('./src/prompts/Prompts');
 
 const { TextBisonApi } = TextBisonApiService();
-let validValues = {
-   DB_HOST: null,
-   DB_USER: null,
-   DB_PASSWORD: null,
-   DB_NAME: null,
-   PORT_NUMBER: null,
-};
-const properties = Object.keys(validValues);
-
-const getNextInput = async index => {
-   if (index >= properties.length) {
-      console.log(validValues);
-      return validValues;
-   }
-
-   const propertyName = properties[index];
-
-   const text = await vscode.window.showInputBox({
-      placeHolder: propertyName,
-      validateInput: text => {
-         const regex = /^\d+$/;
-         const isValid = regex.test(text);
-         if (isValid) {
-            validValues[propertyName] = text;
-         }
-         return isValid ? null : 'Invalid input';
-      },
-   });
-
-   if (text !== undefined) {
-      await getNextInput(index + 1);
-   } else {
-      vscode.window.showErrorMessage(
-         'Input sequence cancelled, terminating...',
-      );
-      return undefined;
-   }
-   return validValues;
-};
 
 const activate = async context => {
    let generateTemplateAction = vscode.commands.registerCommand(
@@ -80,16 +42,16 @@ const activate = async context => {
             );
          }
 
-         const output = await getNextInput(0);
+         const output = await getUserInput(0);
          if (output != undefined) {
             const filteredPrompt = getFilteredPrompt(
                Prompts.CREATE_DOCKER_FILE,
                {
-                  DB_HOST: 'localhost',
-                  DB_USER: 'admin',
-                  DB_PASSWORD: 'password123',
-                  DB_NAME: 'my_database',
-                  PORT_NUMBER: 3306,
+                  DB_HOST: output.DB_HOST,
+                  DB_USER: output.DB_USER,
+                  DB_PASSWORD: output.DB_PASSWORD,
+                  DB_NAME: output.DB_NAME,
+                  PORT_NUMBER: output.PORT_NUMBER,
                },
             );
 
