@@ -1,3 +1,4 @@
+const vscode = require('vscode');
 const GooglePaLMApi = require('../api/Google-PaLM-api/text-bison-001/Api');
 const { PALM_API_KEY } = require('../constants');
 const { generateTemplate } = require('../helper/helpers');
@@ -18,10 +19,16 @@ const TextBisonApiService = () => {
       })
          .call()
          .then(response => {
-            generateTemplate(
-               response.candidates[0].output.replace(/^```|```$/g, ''),
-               filename,
-            );
+            if (filename) {
+               generateTemplate(
+                  response.candidates[0].output.replace(/^```|```$/g, ''),
+                  filename,
+               );
+            } else {
+               vscode.window.showInformationMessage(
+                  response.candidates[0].output,
+               );
+            }
          })
          .catch(error => {
             console.log('Error in fetching data:', error);
