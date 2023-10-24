@@ -13,7 +13,7 @@
       "onCommand:extension.generateTemplate",
       "onCommand:extension.callPaLMApi"
    ],
-   "main": "./extension.js",
+   "main": "./src/extension.js",
    "contributes": {
       "commands": [
          {

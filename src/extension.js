@@ -1,15 +1,15 @@
 const vscode = require('vscode');
-const TextBisonApiService = require('./src/service/TextBisonApiService');
-const TreeViewProvider = require('./src/helper/TreeViewProvider');
+const TextBisonApiService = require('./service/TextBisonApiService');
+const TreeViewProvider = require('./helper/TreeViewProvider');
 const {
    getFilteredPrompt,
    getStringifiedPrompt,
    generateTemplate,
    getHTMLContentForPrompt,
    getUserInput,
-} = require('./src/helper/helpers');
-const { htmlContent, baseHTML } = require('./src/constants');
-const Prompts = require('./src/prompts/Prompts');
+} = require('./helper/helpers');
+const { htmlContent, baseHTML } = require('./constants');
+const Prompts = require('./prompts/Prompts');
 
 const { TextBisonApi } = TextBisonApiService();
 
