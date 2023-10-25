@@ -34,11 +34,19 @@ const generateTemplate = (content, filename) => {
 
    folderPath = folderPath + '/';
 
-   fs.writeFile(path.join(folderPath, filename), content, err => {
-      if (err) {
-         return console.log(err);
+   const filePath = path.join(folderPath, filename);
+
+   fs.access(filePath, fs.constants.F_OK, err => {
+      if (!err) {
+         return vscode.window.showWarningMessage('File already exists!');
       }
-      vscode.window.showWarningMessage('Created boilerplate file!');
+
+      fs.writeFile(filePath, content, err => {
+         if (err) {
+            return console.log(err);
+         }
+         vscode.window.showWarningMessage('Created boilerplate file!');
+      });
    });
 };
 
