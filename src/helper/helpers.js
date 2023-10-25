@@ -78,10 +78,69 @@ const getUserInput = async index => {
    return validValues;
 };
 
+const triggerUserInput = async inputType => {
+   const text = await vscode.window.showInputBox({
+      placeHolder: inputType,
+   });
+   if (text !== undefined) {
+      vscode.window.showInformationMessage('Setting the value...');
+      return text;
+   } else {
+      vscode.window.showErrorMessage(
+         'Input sequence cancelled, terminating...',
+      );
+      return undefined;
+   }
+};
+
+const setValueToEnv = (key, value) => {
+   if (!vscode.workspace || !vscode.workspace.workspaceFolders) {
+      return vscode.window.showErrorMessage(
+         'Please open a project folder first',
+      );
+   }
+   let folderPath = vscode.workspace.workspaceFolders[0].uri
+      .toString()
+      .split(':')[1];
+
+   folderPath = folderPath + '/.env';
+
+   fs.readFile(folderPath, 'utf8', (err, data) => {
+      if (err) {
+         return console.log(err);
+      }
+      const keyExists = data.match(new RegExp(`${key}=.+`));
+
+      if (keyExists) {
+         const updatedData = data.replace(
+            new RegExp(`${key}=.+`),
+            `${key}="${value}"`,
+         );
+         fs.writeFile(folderPath, updatedData, 'utf8', err => {
+            if (err) {
+               console.error(err);
+               return;
+            }
+            console.log(`${key} updated to ${value}`);
+         });
+      } else {
+         fs.appendFile(folderPath, `\n${key}="${value}"`, 'utf8', err => {
+            if (err) {
+               console.error(err);
+               return;
+            }
+            console.log(`${key} added with value ${value}`);
+         });
+      }
+   });
+};
+
 module.exports = {
    getFilteredPrompt,
    getStringifiedPrompt,
    generateTemplate,
    getHTMLContentForPrompt,
    getUserInput,
+   triggerUserInput,
+   setValueToEnv,
 };
