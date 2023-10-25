@@ -1,5 +1,3 @@
-const PALM_API_KEY = 'put the key here';
-
 const htmlContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,4 +42,4 @@ let validValues = {
    PORT_NUMBER: null,
 };
 
-module.exports = { PALM_API_KEY, htmlContent, baseHTML, regexMap, validValues };
+module.exports = { htmlContent, baseHTML, regexMap, validValues };
