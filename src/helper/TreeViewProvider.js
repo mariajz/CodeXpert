@@ -23,8 +23,8 @@ class TreeViewProvider {
       } else {
          return Promise.resolve([
             new CustomButtonTreeItem({
-               command: 'CodeXpert.generateTemplate',
-               title: 'Generate Templates',
+               command: 'CodeXpert.setupWorkspace',
+               title: 'Setup Workspace',
             }),
             new CustomButtonTreeItem({
                command: 'CodeXpert.createDockerFile',

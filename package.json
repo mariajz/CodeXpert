@@ -25,6 +25,10 @@
             "title": "Call PaLM API"
          },
          {
+            "command": "CodeXpert.setupWorkspace",
+            "title": "Setup Workspace"
+         },
+         {
             "command": "CodeXpert.createDockerFile",
             "title": "Create Docker File"
          }
