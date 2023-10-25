@@ -32,7 +32,7 @@ const generateTemplate = (content, filename) => {
       .toString()
       .split(':')[1];
 
-   folderPath = folderPath + '/CodeXpert/';
+   folderPath = folderPath + '/';
 
    fs.writeFile(path.join(folderPath, filename), content, err => {
       if (err) {
