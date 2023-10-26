@@ -21,7 +21,7 @@ const TextBisonApiService = () => {
          prompt: { text: inputPrompt ? inputPrompt : 'Hello' },
       };
       if (!PALM_API_KEY) {
-         vscode.window.showErrorMessage('Invalid api key!');
+         vscode.window.showErrorMessage('Api key not found!');
       } else {
          await new GooglePaLMApi({
             queryParams: queryParams,
