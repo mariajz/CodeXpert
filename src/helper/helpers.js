@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const vscode = require('vscode');
 const { regexMap } = require('../constants/constants');
+const dotenv = require('dotenv');
 
 const getFilteredPrompt = (prompt, envVariableList) => {
    let filteredPrompt = prompt;
@@ -156,6 +157,17 @@ const setValueToEnv = (key, value) => {
    });
 };
 
+const getApiKey = key => {
+   let folderPath = vscode.workspace.workspaceFolders[0].uri
+      .toString()
+      .split(':')[1];
+
+   folderPath = folderPath + '/.env';
+   const result = dotenv.config({ path: folderPath });
+   const value = result.parsed[key];
+   return value;
+};
+
 module.exports = {
    extractEnvVariablesFromPrompt,
    getFilteredPrompt,
@@ -165,4 +177,5 @@ module.exports = {
    getUserInputs,
    triggerUserInput,
    setValueToEnv,
+   getApiKey,
 };
