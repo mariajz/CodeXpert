@@ -42,6 +42,9 @@ const TextBisonApiService = () => {
             })
             .catch(error => {
                console.log('Error in fetching data:', error);
+               vscode.window.showErrorMessage(
+                  error.response.data.error.message || 'Something went wrong!',
+               );
             });
       }
    };
