@@ -16,6 +16,16 @@ const getFilteredPrompt = (prompt, values) => {
    return filteredPrompt;
 };
 
+const extractEnvVariablesFromPrompt = prompt => {
+   const pattern = /##(.*?)##/g;
+   const matches = [...prompt.matchAll(pattern)].map(match => match[1]);
+   const result = {};
+   for (const match of matches) {
+      result[match] = null;
+   }
+   return result;
+};
+
 const getStringifiedPrompt = prompt => {
    const stringifiedPrompt = JSON.stringify(prompt);
 
@@ -144,6 +154,7 @@ const setValueToEnv = (key, value) => {
 };
 
 module.exports = {
+   extractEnvVariablesFromPrompt,
    getFilteredPrompt,
    getStringifiedPrompt,
    generateTemplate,
