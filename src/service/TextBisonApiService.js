@@ -10,9 +10,8 @@ const TextBisonApiService = () => {
          .split(':')[1];
 
       folderPath = folderPath + '/.env';
-      dotenv.config({ path: folderPath });
-
-      const PALM_API_KEY = process.env.PALM_API_KEY;
+      const result = dotenv.config({ path: folderPath });
+      const PALM_API_KEY = result.parsed.PALM_API_KEY;
       const queryParams = {
          key: PALM_API_KEY,
       };

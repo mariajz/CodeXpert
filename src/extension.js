@@ -1,4 +1,3 @@
-require('dotenv').config();
 const vscode = require('vscode');
 const TreeViewProvider = require('./helper/TreeViewProvider');
 const generateTemplateAction = require('./actions/generateTemplateAction');
