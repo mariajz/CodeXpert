@@ -4,7 +4,8 @@ const {
    getFilteredPrompt,
    getStringifiedPrompt,
    getHTMLContentForPrompt,
-   getUserInput,
+   getUserInputs,
+   extractEnvVariablesFromPrompt,
 } = require('../helper/helpers');
 const { baseHTML } = require('../constants');
 const Prompts = require('../prompts/Prompts');
@@ -21,17 +22,14 @@ const createDockerFileAction = () => {
             );
          }
 
-         const output = await getUserInput(0);
-         if (output != undefined) {
+         const envVariableList = extractEnvVariablesFromPrompt(
+            Prompts.CREATE_DOCKER_FILE,
+         );
+         const values = await getUserInputs(envVariableList);
+         if (values != undefined) {
             const filteredPrompt = getFilteredPrompt(
                Prompts.CREATE_DOCKER_FILE,
-               {
-                  DB_HOST: output.DB_HOST,
-                  DB_USER: output.DB_USER,
-                  DB_PASSWORD: output.DB_PASSWORD,
-                  DB_NAME: output.DB_NAME,
-                  PORT_NUMBER: output.PORT_NUMBER,
-               },
+               values,
             );
 
             const panel = vscode.window.createWebviewPanel(

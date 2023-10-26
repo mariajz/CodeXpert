@@ -1,17 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 const vscode = require('vscode');
-const { regexMap, validValues } = require('../constants/constants');
+const { regexMap } = require('../constants/constants');
 
-const getFilteredPrompt = (prompt, values) => {
-   const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, PORT_NUMBER } = values;
+const getFilteredPrompt = (prompt, envVariableList) => {
+   let filteredPrompt = prompt;
 
-   const filteredPrompt = prompt
-      .replace(/DB_HOST/g, DB_HOST)
-      .replace(/DB_USER/g, DB_USER)
-      .replace(/DB_PASSWORD/g, DB_PASSWORD)
-      .replace(/DB_NAME/g, DB_NAME)
-      .replace(/PORT_NUMBER/g, PORT_NUMBER);
+   for (const key in envVariableList) {
+      const pattern = new RegExp(`##${key}##`, 'g');
+      filteredPrompt = filteredPrompt.replace(pattern, envVariableList[key]);
+   }
 
    return filteredPrompt;
 };
@@ -65,35 +63,35 @@ const getHTMLContentForPrompt = (baseHTML, filteredPrompt) => {
    return result;
 };
 
-const properties = Object.keys(validValues);
-const getUserInput = async index => {
-   if (index >= properties.length) {
-      return validValues;
+const getUserInputs = async inputValues => {
+   let result = inputValues;
+
+   for (const key in inputValues) {
+      const text = await vscode.window.showInputBox({
+         placeHolder: key,
+         validateInput: text => {
+            if (regexMap.hasOwnProperty(key)) {
+               const regex = regexMap[key];
+               const isValid = regex.test(text);
+               if (isValid) {
+                  result[key] = text;
+               }
+               return isValid ? null : 'Invalid input';
+            } else {
+               result[key] = text;
+               return null;
+            }
+         },
+      });
+      if (text == undefined) {
+         vscode.window.showErrorMessage(
+            'Input sequence cancelled, terminating...',
+         );
+         return undefined;
+      }
    }
 
-   const propertyName = properties[index];
-
-   const text = await vscode.window.showInputBox({
-      placeHolder: propertyName,
-      validateInput: text => {
-         const regex = regexMap[propertyName];
-         const isValid = regex.test(text);
-         if (isValid) {
-            validValues[propertyName] = text;
-         }
-         return isValid ? null : 'Invalid input';
-      },
-   });
-
-   if (text !== undefined) {
-      await getUserInput(index + 1);
-   } else {
-      vscode.window.showErrorMessage(
-         'Input sequence cancelled, terminating...',
-      );
-      return undefined;
-   }
-   return validValues;
+   return result;
 };
 
 const triggerUserInput = async inputType => {
@@ -159,7 +157,7 @@ module.exports = {
    getStringifiedPrompt,
    generateTemplate,
    getHTMLContentForPrompt,
-   getUserInput,
+   getUserInputs,
    triggerUserInput,
    setValueToEnv,
 };
