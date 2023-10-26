@@ -1,15 +1,22 @@
 const vscode = require('vscode');
 const GooglePaLMApi = require('../api/Google-PaLM-api/text-bison-001/Api');
 const { generateTemplate } = require('../helper/helpers');
+const dotenv = require('dotenv');
 
 const TextBisonApiService = () => {
-   const PALM_API_KEY = process.env.PALM_API_KEY;
-
-   const queryParams = {
-      key: PALM_API_KEY,
-   };
-
    const TextBisonApi = async (inputPrompt, filename) => {
+      let folderPath = vscode.workspace.workspaceFolders[0].uri
+         .toString()
+         .split(':')[1];
+
+      folderPath = folderPath + '/.env';
+      dotenv.config({ path: folderPath });
+
+      const PALM_API_KEY = process.env.PALM_API_KEY;
+      const queryParams = {
+         key: PALM_API_KEY,
+      };
+
       const sampleBody = {
          prompt: { text: inputPrompt ? inputPrompt : 'Hello' },
       };
