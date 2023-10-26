@@ -63,6 +63,16 @@ const getHTMLContentForPrompt = (baseHTML, filteredPrompt) => {
    return result;
 };
 
+const validateUserInput = (key, text) => {
+   if (regexMap.hasOwnProperty(key)) {
+      const regex = regexMap[key];
+      const isValid = regex.test(text);
+      return isValid;
+   } else {
+      return true;
+   }
+};
+
 const getUserInputs = async inputValues => {
    let result = inputValues;
 
@@ -70,17 +80,12 @@ const getUserInputs = async inputValues => {
       const text = await vscode.window.showInputBox({
          placeHolder: key,
          validateInput: text => {
-            if (regexMap.hasOwnProperty(key)) {
-               const regex = regexMap[key];
-               const isValid = regex.test(text);
-               if (isValid) {
-                  result[key] = text;
-               }
-               return isValid ? null : 'Invalid input';
-            } else {
-               result[key] = text;
-               return null;
+            const isValid = validateUserInput(key, text);
+            if (!isValid) {
+               return 'Invalid input';
             }
+            result[key] = text;
+            return null;
          },
       });
       if (text == undefined) {
