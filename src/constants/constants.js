@@ -42,4 +42,16 @@ let validValues = {
    PORT_NUMBER: null,
 };
 
-module.exports = { htmlContent, baseHTML, regexMap, validValues };
+let nonEmptyValues = {
+   LANGUAGE: null,
+   PORT_NUMBER: null,
+   EXECUTEFILEPATH: null,
+};
+
+module.exports = {
+   htmlContent,
+   baseHTML,
+   regexMap,
+   validValues,
+   nonEmptyValues,
+};

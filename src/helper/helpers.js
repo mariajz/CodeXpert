@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const vscode = require('vscode');
-const { regexMap } = require('../constants/constants');
+const { regexMap, nonEmptyValues } = require('../constants/constants');
 const dotenv = require('dotenv');
 
 const getFilteredPrompt = (prompt, envVariableList) => {
@@ -81,6 +81,9 @@ const getUserInputs = async inputValues => {
       const text = await vscode.window.showInputBox({
          placeHolder: key,
          validateInput: text => {
+            if (text.trim() === '' && key in nonEmptyValues) {
+               return 'Input cannot be empty';
+            }
             const isValid = validateUserInput(key, text);
             if (!isValid) {
                return 'Invalid input';
