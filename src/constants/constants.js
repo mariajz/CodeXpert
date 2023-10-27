@@ -1,18 +1,3 @@
-const htmlContent = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-    <link rel="stylesheet" href="app.css" />
-</head>
-<body>
-    <script src="app.js"></script>
-</body>
-</html>
-        `;
-
 const baseHTML = ` <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,14 +19,6 @@ const regexMap = {
    PORT_NUMBER: /^\d+$/,
 };
 
-let validValues = {
-   DB_HOST: null,
-   DB_USER: null,
-   DB_PASSWORD: null,
-   DB_NAME: null,
-   PORT_NUMBER: null,
-};
-
 let nonEmptyValues = {
    LANGUAGE: null,
    PORT_NUMBER: null,
@@ -49,9 +26,7 @@ let nonEmptyValues = {
 };
 
 module.exports = {
-   htmlContent,
    baseHTML,
    regexMap,
-   validValues,
    nonEmptyValues,
 };

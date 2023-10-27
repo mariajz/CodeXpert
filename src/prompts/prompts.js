@@ -6,12 +6,12 @@ const Prompts = {
 
       Guidelines:
 
-      1. Utilize ##LANGUAGE## as the base image for the first stage.
-      2. Include environment variables  ##ENV_VARIABLE_LIST##.
-      3. Expose port ##PORT_NUMBER## to enable external access to the application.
-      4. Import all the necessary ##LANGUAGE## libraries utilized in the project.
-      5. Use the ##EXECUTEFILEPATH## path as the entry file to build the project.
-      6. Construct the Dockerfile adhering to these guidelines to ensure a smooth application run within the Docker container.`,
+      Utilize ##LANGUAGE## as the base image for the first stage.
+      Include environment variables  ##ENV_VARIABLE_LIST##.
+      Expose port ##PORT_NUMBER## to enable external access to the application.
+      Import all the necessary ##LANGUAGE## libraries utilized in the project.
+      Use the ##EXECUTEFILEPATH## path as the entry file to build the project.
+      Construct the Dockerfile adhering to these guidelines to ensure a smooth application run within the Docker container.`,
 };
 
 module.exports = Prompts;

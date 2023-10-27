@@ -9,21 +9,9 @@
    "categories": [
       "Other"
    ],
-   "activationEvents": [
-      "onCommand:extension.generateTemplate",
-      "onCommand:extension.callPaLMApi"
-   ],
    "main": "./src/extension.js",
    "contributes": {
       "commands": [
-         {
-            "command": "CodeXpert.generateTemplate",
-            "title": "Generate Template"
-         },
-         {
-            "command": "CodeXpert.callPaLMApi",
-            "title": "Call PaLM API"
-         },
          {
             "command": "CodeXpert.setupWorkspace",
             "title": "Setup Workspace"
