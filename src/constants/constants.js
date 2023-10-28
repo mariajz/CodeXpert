@@ -4,10 +4,28 @@ const baseHTML = ` <!DOCTYPE html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sample Input Prompt</title>
+    <style>
+        .container {
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+        }
+
+        .prompt {
+            white-space: pre-wrap;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
     <h1>Sample Prompt</h1>
-    <p>FILTERED_PROMPT</p>
+    <div class="container">
+      <div class="prompt">
+         <p>
+             FILTERED_PROMPT
+         </p>
+      </div>
+   </div>
 </body>
 </html>`;
 
