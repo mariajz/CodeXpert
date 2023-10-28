@@ -47,15 +47,7 @@ const getStringifiedPrompt = prompt => {
 };
 
 const generateTemplate = (content, filename) => {
-   if (!vscode.workspace || !vscode.workspace.workspaceFolders) {
-      return vscode.window.showErrorMessage(
-         'Please open a project folder first',
-      );
-   }
-   let folderPath = vscode.workspace.workspaceFolders[0].uri
-      .toString()
-      .split(':')[1];
-
+   let folderPath = getRootFolderPath();
    folderPath = folderPath + '/';
 
    const filePath = path.join(folderPath, filename);
@@ -134,14 +126,7 @@ const triggerUserInput = async inputType => {
 };
 
 const setValueToEnv = (key, value) => {
-   if (!vscode.workspace || !vscode.workspace.workspaceFolders) {
-      return vscode.window.showErrorMessage(
-         'Please open a project folder first',
-      );
-   }
-   let folderPath = vscode.workspace.workspaceFolders[0].uri
-      .toString()
-      .split(':')[1];
+   let folderPath = getRootFolderPath();
 
    folderPath = folderPath + '/.env';
 
@@ -176,9 +161,7 @@ const setValueToEnv = (key, value) => {
 };
 
 const getApiKey = key => {
-   let folderPath = vscode.workspace.workspaceFolders[0].uri
-      .toString()
-      .split(':')[1];
+   let folderPath = getRootFolderPath();
 
    folderPath = folderPath + '/.env';
    const result = dotenv.config({ path: folderPath });
@@ -209,11 +192,20 @@ const getStagedFiles = async () => {
    return changes.filter(change => change.type === vscode.FileChangeType.Add);
 };
 
-const getStagedFilesDiff = async () => {
+const getRootFolderPath = () => {
+   if (!vscode.workspace || !vscode.workspace.workspaceFolders) {
+      return vscode.window.showErrorMessage(
+         'Please open a project folder first',
+      );
+   }
    let rootFolderPath = vscode.workspace.workspaceFolders[0].uri
       .toString()
       .split(':')[1];
+   return rootFolderPath;
+};
 
+const getStagedFilesDiff = async () => {
+   const rootFolderPath = getRootFolderPath();
    const command = 'git diff --cached';
    const fullCommand = `cd ${rootFolderPath} && ${command}`;
    exec(fullCommand, (error, stdout) => {
@@ -238,4 +230,5 @@ module.exports = {
    getApiKey,
    getStagedFiles,
    getStagedFilesDiff,
+   getRootFolderPath,
 };
