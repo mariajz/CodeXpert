@@ -220,7 +220,7 @@ const executeCommand = async command => {
 };
 
 const getStagedFilesDiff = async () => {
-   const command = 'git diff --cached';
+   const command = 'git diff --cached | grep -E ^[+-]';
    let result;
    await executeCommand(command)
       .then(stdout => {
