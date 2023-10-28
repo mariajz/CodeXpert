@@ -14,6 +14,7 @@ const TextBisonApiService = () => {
       if (!PALM_API_KEY) {
          vscode.window.showErrorMessage('Api key not found!');
       } else {
+         let result;
          await new GooglePaLMApi({
             queryParams: queryParams,
             data: sampleBody,
@@ -29,6 +30,7 @@ const TextBisonApiService = () => {
                   vscode.window.showInformationMessage(
                      response.candidates[0].output,
                   );
+                  result = response.candidates[0].output;
                }
             })
             .catch(error => {
@@ -37,6 +39,7 @@ const TextBisonApiService = () => {
                   error.response.data.error.message || 'Something went wrong!',
                );
             });
+         return result;
       }
    };
 
