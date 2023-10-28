@@ -206,14 +206,16 @@ const getRootFolderPath = () => {
 
 const executeCommand = async command => {
    const rootFolderPath = getRootFolderPath();
-   const fullCommand = `cd ${rootFolderPath} && ${command}`;
-   exec(fullCommand, (error, stdout) => {
-      if (error) {
-         console.error(`Error executing command: ${error}`);
-         vscode.window.showWarningMessage('Error executing command');
-         return;
-      }
-      console.log(`Result:\n${stdout}`);
+
+   return new Promise((resolve, reject) => {
+      const fullCommand = `cd ${rootFolderPath} && ${command}`;
+
+      exec(fullCommand, (error, stdout) => {
+         if (error) {
+            reject(error);
+         }
+         resolve(stdout);
+      });
    });
 };
 
