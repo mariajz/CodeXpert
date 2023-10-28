@@ -30,6 +30,10 @@ class TreeViewProvider {
                command: 'CodeXpert.createDockerFile',
                title: 'Create Docker File',
             }),
+            new CustomButtonTreeItem({
+               command: 'CodeXpert.smartCommit',
+               title: 'Smart Commit',
+            }),
          ]);
       }
    }

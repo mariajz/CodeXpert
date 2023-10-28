@@ -19,6 +19,10 @@
          {
             "command": "CodeXpert.createDockerFile",
             "title": "Create Docker File"
+         },
+         {
+            "command": "CodeXpert.smartCommit",
+            "title": "Smart Commit"
          }
       ],
       "viewsContainers": {
