@@ -4,6 +4,7 @@ const vscode = require('vscode');
 const { regexMap, nonEmptyValues } = require('../constants/constants');
 const dotenv = require('dotenv');
 const Prompts = require('../prompts/Prompts');
+const { exec } = require('child_process');
 
 const getFilteredPrompt = (prompt, envVariableList) => {
    let filteredPrompt = prompt;
@@ -208,6 +209,23 @@ const getStagedFiles = async () => {
    return changes.filter(change => change.type === vscode.FileChangeType.Add);
 };
 
+const getStagedFilesDiff = async () => {
+   let rootFolderPath = vscode.workspace.workspaceFolders[0].uri
+      .toString()
+      .split(':')[1];
+
+   const command = 'git diff --cached';
+   const fullCommand = `cd ${rootFolderPath} && ${command}`;
+   exec(fullCommand, (error, stdout) => {
+      if (error) {
+         console.error(`Error executing command: ${error}`);
+         vscode.window.showWarningMessage('Error executing command');
+         return;
+      }
+      console.log(`Staged file diffs:\n${stdout}`);
+   });
+};
+
 module.exports = {
    extractEnvVariablesFromPrompt,
    getFilteredPrompt,
@@ -219,4 +237,5 @@ module.exports = {
    setValueToEnv,
    getApiKey,
    getStagedFiles,
+   getStagedFilesDiff,
 };
