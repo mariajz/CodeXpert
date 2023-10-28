@@ -221,7 +221,16 @@ const executeCommand = async command => {
 
 const getStagedFilesDiff = async () => {
    const command = 'git diff --cached';
-   executeCommand(command);
+   let result;
+   await executeCommand(command)
+      .then(stdout => {
+         result = stdout;
+      })
+      .catch(error => {
+         console.error(`Error: ${error}`);
+      });
+
+   return result;
 };
 
 module.exports = {
