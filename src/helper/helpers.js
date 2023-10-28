@@ -3,13 +3,27 @@ const path = require('path');
 const vscode = require('vscode');
 const { regexMap, nonEmptyValues } = require('../constants/constants');
 const dotenv = require('dotenv');
+const Prompts = require('../prompts/Prompts');
 
 const getFilteredPrompt = (prompt, envVariableList) => {
    let filteredPrompt = prompt;
 
    for (const key in envVariableList) {
       const pattern = new RegExp(`##${key}##`, 'g');
-      filteredPrompt = filteredPrompt.replace(pattern, envVariableList[key]);
+      if (envVariableList[key] === '') {
+         filteredPrompt = filteredPrompt.replace(pattern, '');
+      } else {
+         if (Prompts.hasOwnProperty(key)) {
+            filteredPrompt = filteredPrompt
+               .replace(pattern, Prompts[key])
+               .replace(pattern, envVariableList[key]);
+         } else {
+            filteredPrompt = filteredPrompt.replace(
+               pattern,
+               envVariableList[key],
+            );
+         }
+      }
    }
 
    return filteredPrompt;

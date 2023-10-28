@@ -1,8 +1,10 @@
 const Prompts = {
+   DBTYPE: `The application interacts with a ##DBTYPE## database for data management.`,
+   ENV_VARIABLE_LIST: `The required environment variables are ##ENV_VARIABLE_LIST##.`,
    CREATE_DOCKER_FILE: `
       Project Description:
       
-      We are developing a web application in ##LANGUAGE##. The application interacts with a ##DBTYPE## database for data management. The required environment variables are ##ENV_VARIABLE_LIST##. The application should expose port ##PORT_NUMBER##. Please create a multi-stage Dockerfile to encapsulate this application.
+      We are developing a web application in ##LANGUAGE##. ##DBTYPE## ##ENV_VARIABLE_LIST## The application should expose port ##PORT_NUMBER##. Please create a multi-stage Dockerfile to encapsulate this application.
 
       Guidelines:
 
