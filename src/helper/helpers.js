@@ -185,6 +185,29 @@ const getApiKey = key => {
    return value;
 };
 
+const getStagedFiles = async () => {
+   const gitExtension = vscode.extensions.getExtension('vscode.git');
+   if (!gitExtension) {
+      vscode.window.showErrorMessage(
+         'Git extension not found. Please install a Git extension to use this feature.',
+      );
+   }
+
+   const api = gitExtension.exports.getAPI(1);
+   if (!api) {
+      vscode.window.showErrorMessage('Unable to get Git API.');
+   }
+
+   const repository = api.repositories[0];
+   if (!repository) {
+      vscode.window.showErrorMessage('No Git repository found.');
+   }
+
+   const changes = await repository.diffIndexWithHEAD();
+
+   return changes.filter(change => change.type === vscode.FileChangeType.Add);
+};
+
 module.exports = {
    extractEnvVariablesFromPrompt,
    getFilteredPrompt,
@@ -195,4 +218,5 @@ module.exports = {
    triggerUserInput,
    setValueToEnv,
    getApiKey,
+   getStagedFiles,
 };
