@@ -9,6 +9,11 @@
    "categories": [
       "Other"
    ],
+   "activationEvents": [
+      "onCommand:extension.setupWorkspace",
+      "onCommand:extension.createDockerFile",
+      "onCommand:extension.smartCommit"
+   ],
    "main": "./src/extension.js",
    "contributes": {
       "commands": [
