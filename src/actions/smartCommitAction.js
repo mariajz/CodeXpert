@@ -2,10 +2,11 @@ const vscode = require('vscode');
 const {
    getStagedFilesDiff,
    getHTMLContentForPrompt,
+   getStringifiedPrompt,
 } = require('../helper/helpers');
 const Prompts = require('../prompts/Prompts');
 const { baseHTML } = require('../constants');
-const { getStagedFilesDiff } = require('../helper/helpers');
+const TextBisonApiService = require('../service/TextBisonApiService');
 
 const getCommitMessagePrompt = diff => {
    let filteredPrompt = Prompts.SMART_COMMIT_MESSAGE.replace(
@@ -14,6 +15,7 @@ const getCommitMessagePrompt = diff => {
    );
    return filteredPrompt;
 };
+const { TextBisonApi } = TextBisonApiService();
 
 const smartCommitAction = () =>
    vscode.commands.registerCommand('CodeXpert.smartCommit', async function () {
@@ -45,6 +47,10 @@ const smartCommitAction = () =>
          baseHTML,
          commitMessagePrompt,
       );
+
+      let inputPrompt = getStringifiedPrompt(commitMessagePrompt);
+
+      TextBisonApi(inputPrompt);
    });
 
 module.exports = smartCommitAction;
