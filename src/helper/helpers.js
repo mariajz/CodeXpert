@@ -204,9 +204,8 @@ const getRootFolderPath = () => {
    return rootFolderPath;
 };
 
-const getStagedFilesDiff = async () => {
+const executeCommand = async command => {
    const rootFolderPath = getRootFolderPath();
-   const command = 'git diff --cached';
    const fullCommand = `cd ${rootFolderPath} && ${command}`;
    exec(fullCommand, (error, stdout) => {
       if (error) {
@@ -214,8 +213,13 @@ const getStagedFilesDiff = async () => {
          vscode.window.showWarningMessage('Error executing command');
          return;
       }
-      console.log(`Staged file diffs:\n${stdout}`);
+      console.log(`Result:\n${stdout}`);
    });
+};
+
+const getStagedFilesDiff = async () => {
+   const command = 'git diff --cached';
+   executeCommand(command);
 };
 
 module.exports = {
@@ -230,5 +234,6 @@ module.exports = {
    getApiKey,
    getStagedFiles,
    getStagedFilesDiff,
+   executeCommand,
    getRootFolderPath,
 };
