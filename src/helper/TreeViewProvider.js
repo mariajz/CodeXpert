@@ -38,6 +38,10 @@ class TreeViewProvider {
                command: 'CodeXpert.codeReview',
                title: 'Code Review',
             }),
+            new CustomButtonTreeItem({
+               command: 'CodeXpert.explainCode',
+               title: 'Explain Code',
+            }),
          ]);
       }
    }

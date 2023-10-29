@@ -4,12 +4,14 @@ const createDockerFileAction = require('./actions/createDockerFileAction');
 const setupWorkspaceAction = require('./actions/setupWorkspaceAction');
 const smartCommitAction = require('./actions/smartCommitAction');
 const codeReviewAction = require('./actions/codeReviewAction');
+const explainCodeAction = require('./actions/explainCodeAction');
 
 const activate = async context => {
    setupWorkspaceAction();
    createDockerFileAction();
    smartCommitAction();
    codeReviewAction();
+   explainCodeAction();
 
    let treeViewProvider = new TreeViewProvider(context);
    vscode.window.registerTreeDataProvider('codexpert', treeViewProvider);

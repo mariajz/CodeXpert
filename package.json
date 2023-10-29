@@ -13,7 +13,8 @@
       "onCommand:extension.setupWorkspace",
       "onCommand:extension.createDockerFile",
       "onCommand:extension.smartCommit",
-      "onCommand:extension.codeReview"
+      "onCommand:extension.codeReview",
+      "onCommand:extension.explainCode"
    ],
    "main": "./src/extension.js",
    "contributes": {
@@ -33,6 +34,10 @@
          {
             "command": "CodeXpert.codeReview",
             "title": "Code Review"
+         },
+         {
+            "command": "CodeXpert.explainCode",
+            "title": "Explain Code"
          }
       ],
       "viewsContainers": {
