@@ -233,6 +233,20 @@ const getStagedFilesDiff = async () => {
    return result;
 };
 
+const getStagedFilesFullDiff = async () => {
+   const command = 'git diff --cached -U10000';
+   let result;
+   await executeCommand(command)
+      .then(stdout => {
+         result = stdout;
+      })
+      .catch(error => {
+         console.error(`Error: ${error}`);
+      });
+
+   return result;
+};
+
 module.exports = {
    extractEnvVariablesFromPrompt,
    getFilteredPrompt,
@@ -247,4 +261,5 @@ module.exports = {
    getStagedFilesDiff,
    executeCommand,
    getRootFolderPath,
+   getStagedFilesFullDiff,
 };

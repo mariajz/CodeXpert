@@ -12,7 +12,8 @@
    "activationEvents": [
       "onCommand:extension.setupWorkspace",
       "onCommand:extension.createDockerFile",
-      "onCommand:extension.smartCommit"
+      "onCommand:extension.smartCommit",
+      "onCommand:extension.codeReview"
    ],
    "main": "./src/extension.js",
    "contributes": {
@@ -28,6 +29,10 @@
          {
             "command": "CodeXpert.smartCommit",
             "title": "Smart Commit"
+         },
+         {
+            "command": "CodeXpert.codeReview",
+            "title": "Code Review"
          }
       ],
       "viewsContainers": {

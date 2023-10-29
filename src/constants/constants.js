@@ -3,7 +3,6 @@ const baseHTML = ` <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample Input Prompt</title>
     <style>
         .container {
             font-family: Arial, sans-serif;
@@ -18,7 +17,6 @@ const baseHTML = ` <!DOCTYPE html>
     </style>
 </head>
 <body>
-    <h1>Sample Prompt</h1>
     <div class="container">
       <div class="prompt">
          <p>

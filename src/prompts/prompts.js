@@ -15,6 +15,7 @@ const Prompts = {
       Use the ##EXECUTEFILEPATH## path as the entry file to build the project.
       Construct the Dockerfile adhering to these guidelines to ensure a smooth application run within the Docker container.`,
    SMART_COMMIT_MESSAGE: `Generate a proper commit message from this diff: \n\n ##GIT_DIFF##`,
+   CODE_REVIEW: `Read the following diff and review the code, output only the issues with the code : \n\n ##GIT_FULL_DIFF##`,
 };
 
 module.exports = Prompts;

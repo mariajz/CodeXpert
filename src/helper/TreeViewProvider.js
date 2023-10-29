@@ -34,6 +34,10 @@ class TreeViewProvider {
                command: 'CodeXpert.smartCommit',
                title: 'Smart Commit',
             }),
+            new CustomButtonTreeItem({
+               command: 'CodeXpert.codeReview',
+               title: 'Code Review',
+            }),
          ]);
       }
    }
