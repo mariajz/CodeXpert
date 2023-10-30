@@ -40,7 +40,7 @@ class TreeViewProvider {
             }),
             new CustomButtonTreeItem({
                command: 'CodeXpert.explainCode',
-               title: 'Explain Code',
+               title: 'Explain Project',
             }),
             new CustomButtonTreeItem({
                command: 'CodeXpert.explainCurrentCode',
