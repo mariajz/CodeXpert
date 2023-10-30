@@ -131,7 +131,7 @@ const setValueToEnv = (key, value) => {
 
    folderPath = folderPath + '/.env';
 
-   fs.readFile(folderPath, (err, data) => {
+   fs.readFile(folderPath, 'utf8', (err, data) => {
       if (err) {
          return console.log(err);
       }
