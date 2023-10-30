@@ -132,7 +132,7 @@ const setValueToEnv = (key, value) => {
 
    folderPath = folderPath + '/.env';
 
-   fs.readFile(folderPath, (err, data) => {
+   fs.readFile(folderPath, 'utf8', (err, data) => {
       if (err) {
          return console.log(err);
       }
@@ -194,13 +194,26 @@ const getStagedFiles = async () => {
    return changes.filter(change => change.type === vscode.FileChangeType.Add);
 };
 
-const getRootFolderPath = () => {
+const getRootPath = () => {
    if (!vscode.workspace || !vscode.workspace.workspaceFolders) {
       return vscode.window.showErrorMessage(
          'Please open a project folder first',
       );
    }
    let rootFolderPath = vscode.workspace.rootPath;
+   return rootFolderPath;
+};
+
+const getRootFolderPath = () => {
+   if (!vscode.workspace || !vscode.workspace.workspaceFolders) {
+      return vscode.window.showErrorMessage(
+         'Please open a project folder first',
+      );
+   }
+   let rootFolderPath = vscode.workspace.workspaceFolders[0].uri
+      .toString()
+      .split(':')[1];
+
    return rootFolderPath;
 };
 
@@ -303,4 +316,5 @@ module.exports = {
    getStagedFilesFullDiff,
    runPythonScripts,
    copy_prompts,
+   getRootPath,
 };

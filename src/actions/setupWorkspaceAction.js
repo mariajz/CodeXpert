@@ -1,10 +1,9 @@
-const fs = require('fs');
 const vscode = require('vscode');
 const {
    generateTemplate,
    triggerUserInput,
    setValueToEnv,
-   copy_prompts
+   copy_prompts,
 } = require('../helper/helpers');
 
 const setupWorkspaceAction = () =>
@@ -20,9 +19,5 @@ const setupWorkspaceAction = () =>
          }
       },
    );
-
-
-
-
 
 module.exports = setupWorkspaceAction;
