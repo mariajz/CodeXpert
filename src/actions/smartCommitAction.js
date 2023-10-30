@@ -9,8 +9,31 @@ const Prompts = require('../prompts/Prompts');
 const { baseHTML } = require('../constants');
 const TextBisonApiService = require('../service/TextBisonApiService');
 
+const splitCommit = commitMessage => {
+   const commitMessageArray = commitMessage.split('\n');
+   const commitTitle = commitMessageArray[0];
+   const commitDescription =
+      commitMessageArray.length > 1
+         ? commitMessageArray.slice(1).filter(item => item !== '')
+         : [];
+   return {
+      commitTitle,
+      commitDescription,
+   };
+};
 const makeCommit = async commitMessage => {
-   await executeCommand(`git commit -m "${commitMessage}"`)
+   const { commitTitle, commitDescription } = splitCommit(commitMessage);
+   let commitCommand = `git commit -m "${commitTitle}"`;
+
+   if (commitDescription.length !== 0) {
+      commitDescription.forEach(description => {
+         commitCommand += ` -m "${description}"`;
+      });
+   }
+
+   console.log(commitCommand);
+
+   await executeCommand(commitCommand)
       .then(() => {
          vscode.window.showInformationMessage('Commit Successful ✅');
       })
@@ -66,8 +89,10 @@ const smartCommitAction = () =>
 
       const commitMessage = await TextBisonApi(inputPrompt);
 
+      const filteredCommitMessage = commitMessage.replace('```', '');
+
       const finalCommitMessage = await vscode.window.showInputBox({
-         value: commitMessage,
+         value: filteredCommitMessage,
          validateInput: text => {
             if (text.trim() === '') {
                return 'Commit message cannot be empty';
