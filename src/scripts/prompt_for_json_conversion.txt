@@ -1,0 +1,1 @@
+For the given string json content, convert it to json and return it. if there is any double code used other than key and value replace it with single codes  

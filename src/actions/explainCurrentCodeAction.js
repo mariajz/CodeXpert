@@ -10,8 +10,8 @@ const getExplainCodePrompt = () => {
    return Prompts.EXPLAIN_CODE;
 };
 
-const explainCodeAction = () =>
-   vscode.commands.registerCommand('CodeXpert.explainCode', async function () {
+const explainCurrentCodeAction = () =>
+   vscode.commands.registerCommand('CodeXpert.explainCurrentCode', async function () {
       const explainCodePrompt = getExplainCodePrompt();
       const promptPanel = vscode.window.createWebviewPanel(
          'samplePrompt',
@@ -23,9 +23,9 @@ const explainCodeAction = () =>
          baseHTML,
          explainCodePrompt,
       );
-
+      let argument = vscode.window.activeTextEditor.document.uri.fsPath;
       // uncomment this to test python scripts
-       runPythonScripts(vscode.workspace.rootPath,"explain_whole_project.py","");
+       runPythonScripts(vscode.workspace.rootPath,"explain_whole_project.py",argument);
    });
 
-module.exports = explainCodeAction;
+module.exports = explainCurrentCodeAction;
