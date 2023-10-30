@@ -7,8 +7,8 @@ from util import Util
 from tree_structure import TreeStructure
 
 
-file_path = (sys.argv[1])
-auth_token = sys.args[2]
+file_path = sys.argv[1]
+auth_token = sys.argv[2]
 util = Util(file_path,auth_token)
 
 util.make_directory_if_not_exists("documents")

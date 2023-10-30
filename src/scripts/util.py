@@ -26,8 +26,8 @@ class Util:
             with open(self.root_path+"/documents/"+file_name, 'w',encoding='utf-8') as f:
                 f.write(text)
         except Exception as e:
-            #print("Error writing to file: "+file_name)
-            #print(str(e))
+            print("Error writing to file: "+file_name)
+            print(str(e))
             pass
 
     def make_directory_if_not_exists(self,directory_name):

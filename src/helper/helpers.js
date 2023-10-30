@@ -7,7 +7,6 @@ const Prompts = require('../prompts/Prompts');
 const { exec } = require('child_process');
 const { baseHTML } = require('../constants');
 
-
 const getFilteredPrompt = (prompt, envVariableList) => {
    let filteredPrompt = prompt;
 
@@ -132,7 +131,7 @@ const setValueToEnv = (key, value) => {
 
    folderPath = folderPath + '/.env';
 
-   fs.readFile(folderPath,  (err, data) => {
+   fs.readFile(folderPath, (err, data) => {
       if (err) {
          return console.log(err);
       }
@@ -247,48 +246,45 @@ const getStagedFilesFullDiff = async () => {
    return result;
 };
 
-const { PythonShell } = require('python-shell');
-
 const runPythonScripts = async (workspace_path, script_name, argument) => {
-   const pythonScriptPath = path.join(__dirname, '../scripts/'+script_name)+" "+workspace_path;
-   let auth_key = getApiKey('PALM_API_URL');
-   await exec(`python ${pythonScriptPath} ${auth_key} ${argument}`, (error, stdout, stderr) => {
-      if (error) {
-          console.error(`Error: ${error.message}`);
-          return;
-      }
-      if (stderr) {
-          console.error(`stderr: ${stderr}`);
-          return;
-      }
-      console.log(`stdout: ${stdout}`);
-      const promptPanel = vscode.window.createWebviewPanel(
-         'Code Explanation',
-         'Code Explanation',
-         vscode.ViewColumn.One,
-         {},
-      );
-      promptPanel.webview.html = getHTMLContentForPrompt(
-         baseHTML,
-         stdout,
-      );
-  });
+   const pythonScriptPath =
+      path.join(__dirname, '../scripts/' + script_name) + ' ' + workspace_path;
+   let auth_key = getApiKey('PALM_API_KEY');
+   await exec(
+      `python3 ${pythonScriptPath} ${auth_key} ${argument}`,
+      (error, stdout, stderr) => {
+         if (error) {
+            console.error(`Error: ${error.message}`);
+            return;
+         }
+         if (stderr) {
+            console.error(`stderr: ${stderr}`);
+            return;
+         }
+         console.log(`stdout: ${stdout}`);
+         const promptPanel = vscode.window.createWebviewPanel(
+            'Code Explanation',
+            'Code Explanation',
+            vscode.ViewColumn.One,
+            {},
+         );
+         promptPanel.webview.html = getHTMLContentForPrompt(baseHTML, stdout);
+      },
+   );
 
-  console.log("Python script executed");
-
-   
+   console.log('Python script executed');
 };
-const copy_prompts = (file_name)=>{
-   sourceFilePath =  path.join(__dirname, '../scripts/'+file_name);
-   destinationFilePath = vscode.workspace.rootPath + '/'+file_name;
-   fs.copyFile(sourceFilePath, destinationFilePath, (error) => {
+const copy_prompts = file_name => {
+   let sourceFilePath = path.join(__dirname, '../scripts/' + file_name);
+   let destinationFilePath = vscode.workspace.rootPath + '/' + file_name;
+   fs.copyFile(sourceFilePath, destinationFilePath, error => {
       if (error) {
          console.error('Error occurred while copying the file:', error);
       } else {
          console.log('File was successfully copied.');
       }
    });
-}
+};
 module.exports = {
    extractEnvVariablesFromPrompt,
    getFilteredPrompt,
