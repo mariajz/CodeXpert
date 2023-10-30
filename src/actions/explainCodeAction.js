@@ -1,5 +1,8 @@
 const vscode = require('vscode');
-const { getHTMLContentForPrompt } = require('../helper/helpers');
+const {
+   getHTMLContentForPrompt,
+   runPythonScripts,
+} = require('../helper/helpers');
 const Prompts = require('../prompts/Prompts');
 const { baseHTML } = require('../constants');
 
@@ -20,6 +23,9 @@ const explainCodeAction = () =>
          baseHTML,
          explainCodePrompt,
       );
+
+      // uncomment this to test python scripts
+      // runPythonScripts();
    });
 
 module.exports = explainCodeAction;

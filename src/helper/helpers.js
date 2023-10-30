@@ -247,6 +247,20 @@ const getStagedFilesFullDiff = async () => {
    return result;
 };
 
+const { PythonShell } = require('python-shell');
+
+const runPythonScripts = () => {
+   let options = {
+      mode: 'text',
+      pythonPath: 'python3',
+      scriptPath: path.join(__dirname, '../scripts'),
+   };
+   PythonShell.run('main.py', options, function (err, results) {
+      if (err) throw err;
+      console.log('Python script completed:', results);
+   });
+};
+
 module.exports = {
    extractEnvVariablesFromPrompt,
    getFilteredPrompt,
@@ -262,4 +276,5 @@ module.exports = {
    executeCommand,
    getRootFolderPath,
    getStagedFilesFullDiff,
+   runPythonScripts,
 };
