@@ -6,6 +6,7 @@
       "node": true,
       "mocha": true
    },
+   "parser": "babel-eslint",
    "parserOptions": {
       "ecmaVersion": 2018,
       "ecmaFeatures": {
@@ -20,6 +21,11 @@
       "no-unreachable": "warn",
       "no-unused-vars": "warn",
       "constructor-super": "warn",
-      "valid-typeof": "warn"
-   }
+      "valid-typeof": "warn",
+      "babel/no-unused-expressions": "error",
+      "babel/valid-typeof": "error"
+   },
+   "plugins": [
+      "babel"
+   ]
 }
