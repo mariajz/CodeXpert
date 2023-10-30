@@ -28,9 +28,9 @@ const TextBisonApiService = () => {
                   );
                } else {
                   vscode.window.showInformationMessage(
-                     response.candidates[0].output,
+                     response?.candidates[0]?.output || 'Something went wrong!',
                   );
-                  result = response.candidates[0].output;
+                  result = response?.candidates[0]?.output;
                }
             })
             .catch(error => {
