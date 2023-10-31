@@ -24,10 +24,10 @@ const Prompts = {
          - Type: [feat], [fix], [chore], [docs], [style], [refactor], [test], or [perf]
          - Main Line: A concise summary of what the commit accomplishes.
          - Description: Additional details about the changes (optional but encouraged)
-      4. If description is present, there should compulsorily be a \n added between the main line and the description
+      4. If description is present, there should compulsorily be a \\n added between the main line and the description
       
       Example commit message:
-      [feat] Implement user authentication \n - Added user login functionality. \n - Created user registration API.
+      [feat] Implement user authentication \\n - Added user login functionality. \\n - Created user registration API.
 
       Diff:
       ##GIT_DIFF##
