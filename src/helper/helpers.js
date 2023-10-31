@@ -68,7 +68,10 @@ const generateTemplate = (content, filename) => {
 };
 
 const getHTMLContentForPrompt = (baseHTML, filteredPrompt) => {
-   const result = baseHTML.replace(/FILTERED_PROMPT/g, filteredPrompt);
+   const escapedPrompt = filteredPrompt
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+   const result = baseHTML.replace(/FILTERED_PROMPT/g, escapedPrompt);
    return result;
 };
 
