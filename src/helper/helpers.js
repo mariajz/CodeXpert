@@ -111,18 +111,20 @@ const getUserInputs = async inputValues => {
    return result;
 };
 
-const triggerUserInput = async inputType => {
+const triggerUserInput = async (inputType, isEmptyAllowed = false) => {
    const text = await vscode.window.showInputBox({
       placeHolder: inputType,
    });
    if (text !== undefined) {
       vscode.window.showInformationMessage('Setting the value...');
       return text;
-   } else {
+   } else if (!isEmptyAllowed) {
       vscode.window.showErrorMessage(
          'Input sequence cancelled, terminating...',
       );
       return undefined;
+   } else {
+      return '';
    }
 };
 
