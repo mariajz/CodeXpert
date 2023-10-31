@@ -10,7 +10,7 @@ const { baseHTML } = require('../constants');
 const TextBisonApiService = require('../service/TextBisonApiService');
 
 const splitCommit = commitMessage => {
-   const commitMessageArray = commitMessage.split('\n');
+   const commitMessageArray = commitMessage.split('\\n');
    const commitTitle = commitMessageArray[0];
    const commitDescription =
       commitMessageArray.length > 1
@@ -25,13 +25,11 @@ const makeCommit = async commitMessage => {
    const { commitTitle, commitDescription } = splitCommit(commitMessage);
    let commitCommand = `git commit -m "${commitTitle}"`;
 
-   if (commitDescription.length !== 0) {
+   if (commitDescription.length > 0) {
       commitDescription.forEach(description => {
          commitCommand += ` -m "${description}"`;
       });
    }
-
-   console.log(commitCommand);
 
    await executeCommand(commitCommand)
       .then(() => {
