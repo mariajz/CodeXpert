@@ -4,6 +4,7 @@ const {
    getHTMLContentForPrompt,
    getStringifiedPrompt,
    executeCommand,
+   triggerUserInput,
 } = require('../helper/helpers');
 const Prompts = require('../prompts/Prompts');
 const { baseHTML } = require('../constants');
@@ -21,9 +22,11 @@ const splitCommit = commitMessage => {
       commitDescription,
    };
 };
-const makeCommit = async commitMessage => {
+const makeCommit = async (commitMessage, issueNumber, pairName) => {
    const { commitTitle, commitDescription } = splitCommit(commitMessage);
-   let commitCommand = `git commit -m "${commitTitle}"`;
+   let issueNumberPrefix = issueNumber !== '' ? `${issueNumber}: ` : '';
+   let pairNamePrefix = pairName !== '' ? `${pairName}: ` : '';
+   let commitCommand = `git commit -m "${issueNumberPrefix}${pairNamePrefix}${commitTitle}"`;
 
    if (commitDescription.length > 0) {
       commitDescription.forEach(description => {
@@ -87,6 +90,12 @@ const smartCommitAction = () =>
 
       const commitMessage = await TextBisonApi(inputPrompt);
 
+      const issueNumber = await triggerUserInput(
+         'Issue Number / Story ID',
+         true,
+      );
+      const pairName = await triggerUserInput('Pair Name', true);
+
       const filteredCommitMessage = commitMessage.replace('```', '');
 
       const finalCommitMessage = await vscode.window.showInputBox({
@@ -106,7 +115,7 @@ const smartCommitAction = () =>
       });
 
       if (finalCommitMessage !== undefined) {
-         makeCommit(finalCommitMessage);
+         makeCommit(finalCommitMessage, issueNumber, pairName);
       }
    });
 
