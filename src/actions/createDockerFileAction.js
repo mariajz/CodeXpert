@@ -17,13 +17,6 @@ const createDockerFileAction = () => {
    const { TextBisonApi } = TextBisonApiService();
    const { CompletionsApi } = CompletionsApiService();
 
-   const selectedApiType = getValueFromEnv('API_TYPE');
-   if (!selectedApiType) {
-      return vscode.window.showErrorMessage('Please set an API_TYPE');
-   }
-   const selectedApi =
-      selectedApiType === 'GPT' ? CompletionsApi : TextBisonApi;
-
    vscode.commands.registerCommand(
       'CodeXpert.createDockerFile',
       async function () {
@@ -32,6 +25,12 @@ const createDockerFileAction = () => {
                'Please open a project folder first',
             );
          }
+         const selectedApiType = getValueFromEnv('API_TYPE');
+         if (selectedApiType === undefined) {
+            return vscode.window.showErrorMessage('Please set an API_TYPE');
+         }
+         const selectedApi =
+            selectedApiType === 'GPT' ? CompletionsApi : TextBisonApi;
 
          const envVariableList = extractEnvVariablesFromPrompt(
             Prompts.CREATE_DOCKER_FILE,

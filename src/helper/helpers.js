@@ -171,7 +171,10 @@ const getValueFromEnv = key => {
 
    folderPath = folderPath + '/.env';
    const result = dotenv.config({ path: folderPath });
-   const value = result.parsed[key];
+   const value =
+      result && result.parsed && result.parsed.hasOwnProperty(key)
+         ? result.parsed[key]
+         : undefined;
    return value;
 };
 
