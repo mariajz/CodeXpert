@@ -27,10 +27,19 @@ const TextBisonApiService = () => {
                      filename,
                   );
                } else {
-                  vscode.window.showInformationMessage(
-                     response?.candidates[0]?.output || 'Something went wrong!',
-                  );
-                  result = response?.candidates[0]?.output;
+                  if (
+                     response &&
+                     response.candidates &&
+                     response.candidates.length > 0
+                  ) {
+                     result = response?.candidates[0]?.output;
+                     vscode.window.showInformationMessage(result);
+                  } else {
+                     vscode.window.showErrorMessage(
+                        'Empty response returned from API',
+                     );
+                     result = '';
+                  }
                }
             })
             .catch(error => {
