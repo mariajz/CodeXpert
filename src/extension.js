@@ -8,12 +8,14 @@ const explainCodeAction = require('./actions/explainCodeAction');
 const explainCurrentCodeAction = require('./actions/explainCurrentCodeAction');
 const toggleApiTypeAction = require('./actions/toggleApiTypeAction');
 const dockerHelpAction = require('./actions/dockerHelpAction');
+const updateDockerfileAction = require('./actions/updateDockerFileAction');
 
 const activate = async context => {
    toggleApiTypeAction();
    setupWorkspaceAction();
    createDockerFileAction();
    dockerHelpAction();
+   updateDockerfileAction();
    smartCommitAction();
    codeReviewAction();
    explainCodeAction();

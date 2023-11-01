@@ -166,6 +166,13 @@ const setValueToEnv = (key, value) => {
    });
 };
 
+const readFileContent = async filePath => {
+   const rootFolderPath = getRootFolderPath();
+   const path = rootFolderPath + '/' + filePath;
+   const result = fs.promises.readFile(path, 'utf8');
+   return result;
+};
+
 const getValueFromEnv = key => {
    let folderPath = getRootFolderPath();
 
@@ -326,4 +333,5 @@ module.exports = {
    copy_prompts,
    writeToVSConfig,
    readFromVSConfig,
+   readFileContent,
 };

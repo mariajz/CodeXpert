@@ -14,6 +14,7 @@
       "onCommand:extension.setupWorkspace",
       "onCommand:extension.createDockerFile",
       "onCommand:extension.dockerHelp",
+      "onCommand:extension.updateDockerfile",
       "onCommand:extension.smartCommit",
       "onCommand:extension.codeReview",
       "onCommand:extension.explainCode"
@@ -36,6 +37,10 @@
          {
             "command": "CodeXpert.createDockerFile",
             "title": "Create Docker File"
+         },
+         {
+            "command": "CodeXpert.updateDockerfile",
+            "title": "Update DockerFile"
          },
          {
             "command": "CodeXpert.smartCommit",
