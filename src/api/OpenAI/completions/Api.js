@@ -5,7 +5,7 @@ class Api extends ApiService {
    constructor({ data, headers }) {
       super({
          method: 'POST',
-         url: `${baseUrl}/v1/chat/completions`,
+         url: `${baseUrl}/v1/completions`,
          data: data,
          headers: headers,
       });

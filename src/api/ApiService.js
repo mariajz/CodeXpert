@@ -1,11 +1,12 @@
 const makeApiCall = require('./ApiHelper');
 
 class ApiService {
-   constructor({ method, url, queryParams, data }) {
+   constructor({ method, url, queryParams, data, headers }) {
       this.method = method;
       this.url = url;
       this.queryParams = queryParams;
       this.data = data;
+      this.headers = headers;
    }
 
    async call() {
@@ -16,6 +17,7 @@ class ApiService {
          url: fullUrl,
          method: this.method,
          data: this.data,
+         headers: this.headers,
       });
    }
 }
