@@ -1,10 +1,10 @@
 const vscode = require('vscode');
 const OpenAICompletionsApi = require('../api/OpenAI/completions/Api');
-const { generateTemplate, getApiKey } = require('../helper/helpers');
+const { generateTemplate, getValueFromEnv } = require('../helper/helpers');
 
 const CompletionsApiService = () => {
    const CompletionsApi = async (inputPrompt, filename) => {
-      const GPT_API_KEY = getApiKey('GPT_API_KEY');
+      const GPT_API_KEY = getValueFromEnv('GPT_API_KEY');
       const headers = {
          'Content-Type': 'application/json',
          Authorization: `Bearer ${GPT_API_KEY}`,

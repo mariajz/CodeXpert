@@ -166,7 +166,7 @@ const setValueToEnv = (key, value) => {
    });
 };
 
-const getApiKey = key => {
+const getValueFromEnv = key => {
    let folderPath = getRootFolderPath();
 
    folderPath = folderPath + '/.env';
@@ -254,7 +254,7 @@ const getStagedFilesFullDiff = async () => {
 const runPythonScripts = async (workspace_path, script_name, argument) => {
    const pythonScriptPath =
       path.join(__dirname, '../scripts/' + script_name) + ' ' + workspace_path;
-   let auth_key = getApiKey('PALM_API_KEY');
+   let auth_key = getValueFromEnv('PALM_API_KEY');
    await exec(
       `python3 ${pythonScriptPath} ${auth_key} ${argument}`,
       (error, stdout, stderr) => {
@@ -292,6 +292,18 @@ const copy_prompts = file_name => {
    });
 };
 
+const writeToVSConfig = async (key, value) => {
+   await vscode.workspace
+      .getConfiguration('CodeXpert')
+      .update(key, value, vscode.ConfigurationTarget.WorkspaceFolder);
+   return;
+};
+
+const readFromVSConfig = async key => {
+   const config = vscode.workspace.getConfiguration('CodeXpert');
+   return config.get(key);
+};
+
 module.exports = {
    extractEnvVariablesFromPrompt,
    getFilteredPrompt,
@@ -301,7 +313,7 @@ module.exports = {
    getUserInputs,
    triggerUserInput,
    setValueToEnv,
-   getApiKey,
+   getValueFromEnv,
    getStagedFiles,
    getStagedFilesDiff,
    executeCommand,
@@ -309,5 +321,6 @@ module.exports = {
    getStagedFilesFullDiff,
    runPythonScripts,
    copy_prompts,
-   showQuickPick,
+   writeToVSConfig,
+   readFromVSConfig,
 };

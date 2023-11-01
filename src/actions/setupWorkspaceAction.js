@@ -22,8 +22,11 @@ const setupWorkspaceAction = () =>
       'CodeXpert.setupWorkspace',
       async function () {
          generateTemplate('', '.env');
+
          const selectedApi = await vscode.window.showQuickPick(items);
-         console.log('selectedApi', selectedApi);
+         if (selectedApi != undefined) {
+            setValueToEnv('API_TYPE', selectedApi.label);
+         }
 
          const PALM_API_KEY = await triggerUserInput('PALM_API_KEY');
          if (PALM_API_KEY != undefined) {
