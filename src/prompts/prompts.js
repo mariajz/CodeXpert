@@ -73,6 +73,14 @@ const Prompts = {
    function_calls must have class name followed by method name without arguments
    
    now generate the json for all the methods in the given java code as below`,
+   DOCKER_HELP: `
+   Task: Create docker commands based on user's requirements
+
+   Instructions:
+   1. You will receive a user input which can be anything like logs, images, containers, etc.
+   2. Create a docker command based on the user input.
+
+   User input is the following: ##DOCKER_HELP##`,
 };
 
 module.exports = Prompts;

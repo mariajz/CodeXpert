@@ -13,6 +13,7 @@
       "onCommand:extension.toggleApiType",
       "onCommand:extension.setupWorkspace",
       "onCommand:extension.createDockerFile",
+      "onCommand:extension.dockerHelp",
       "onCommand:extension.smartCommit",
       "onCommand:extension.codeReview",
       "onCommand:extension.explainCode"
@@ -27,6 +28,10 @@
          {
             "command": "CodeXpert.setupWorkspace",
             "title": "Setup Workspace"
+         },
+         {
+            "command": "CodeXpert.dockerHelp",
+            "title": "Docker Help"
          },
          {
             "command": "CodeXpert.createDockerFile",
