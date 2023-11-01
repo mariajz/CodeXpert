@@ -6,8 +6,10 @@ const smartCommitAction = require('./actions/smartCommitAction');
 const codeReviewAction = require('./actions/codeReviewAction');
 const explainCodeAction = require('./actions/explainCodeAction');
 const explainCurrentCodeAction = require('./actions/explainCurrentCodeAction');
+const toggleApiTypeAction = require('./actions/toggleApiTypeAction');
 
 const activate = async context => {
+   toggleApiTypeAction();
    setupWorkspaceAction();
    createDockerFileAction();
    smartCommitAction();

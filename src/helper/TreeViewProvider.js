@@ -23,6 +23,10 @@ class TreeViewProvider {
       } else {
          return Promise.resolve([
             new CustomButtonTreeItem({
+               command: 'CodeXpert.toggleApiType',
+               title: 'Toggle Api Type',
+            }),
+            new CustomButtonTreeItem({
                command: 'CodeXpert.setupWorkspace',
                title: 'Setup Workspace',
             }),

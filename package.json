@@ -20,6 +20,10 @@
    "contributes": {
       "commands": [
          {
+            "command": "CodeXpert.toggleApiType",
+            "title": "Toggle Api Type"
+         },
+         {
             "command": "CodeXpert.setupWorkspace",
             "title": "Setup Workspace"
          },
