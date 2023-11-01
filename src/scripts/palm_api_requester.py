@@ -20,9 +20,7 @@ class PalmAPIRequester:
         if response.status_code == 200:
             response_json = response.json()
             generated_text = response_json["candidates"][0]["output"]
-            #print("Generated Text:")
-           # print(generated_text)
             return generated_text
         else:
-            print(f"Request failed with status code {response.status_code}:\n{response.text}")
+            #self.logging.info(f"Request failed with status code {response.status_code}:\n{response.text}")
             return None

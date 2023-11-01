@@ -1,9 +1,11 @@
 import json
 import anytree
 from anytree import Node, RenderTree
+from util import Util
 
 class TreeStructure:
-    def __init__(self,):
+    def __init__(self, util:Util):
+        self.util = util
         self.root = Node("Root")
 
     def create_tree(self,data, parent=None):
@@ -20,7 +22,7 @@ class TreeStructure:
         for pre, fill, node in RenderTree(self.root):
             node_name = node.name.encode('utf-8', errors='ignore').decode('utf-8', errors='ignore')
             tree_structure = tree_structure+(f"{pre}{node_name}")+"\n"
-            #print(f"{pre}{node_name}")
+            self.util.write_logs(f"{pre}{node_name}"+"\n")
         return tree_structure
     
 

@@ -51,8 +51,7 @@ class RelationShipFinder():
                             class_document[json_content[0]['class']][key['method']] = child_node
                     except:
                         pass
-                #print(document)
-                #print(class_document)
+                
                 code_explanation_document.append(class_document)
         self.util.write_to_file("code_explanation.txt",json.dumps(code_explanation_document))
                         

@@ -1,14 +1,20 @@
 import json
 import os
 import re
-
+import logging
+ 
 from palm_api_requester import PalmAPIRequester
 
 class Util:
+
     def __init__(self, root_path, auth_token):
         self.root_path = root_path
         self.auth_token = auth_token
+        logging.basicConfig(filename=root_path+'/log.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
+    def write_logs(self,log):
+        logging.info(log)
+        
     def find_file_by_name(self,file_name, search_path):
         for root, dir, files in os.walk(search_path):
             if file_name in files:
@@ -26,9 +32,7 @@ class Util:
             with open(self.root_path+"/documents/"+file_name, 'w',encoding='utf-8') as f:
                 f.write(text)
         except Exception as e:
-            print("Error writing to file: "+file_name)
-            print(str(e))
-            pass
+            logging.error("Error writing to file: "+file_name+ " "+str(e))
 
     def make_directory_if_not_exists(self,directory_name):
         if not os.path.exists(self.root_path+"/"+directory_name):
@@ -60,12 +64,11 @@ class Util:
             try:
                 extracted_json = json.loads(extracted_json)
             except:
-                #print("Error loading json")
-                #print(extracted_json)
+                logging.error("Error loading json" +extracted_json)
                 pass
             return extracted_json
         else:
-            #print("No JSON content found in the text.")
+            logging.info("No JSON content found in the text.")
             return None
 
     def create_prompt_payload(self,file_name, content):
@@ -92,8 +95,7 @@ class Util:
             else:
                 return json_data
         except:
-            #print("Error loading json")
-            #print(text)
+            logging.error("Error loading json:"+text)
             pass
         return None
 

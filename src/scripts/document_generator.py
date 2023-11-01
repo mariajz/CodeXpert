@@ -22,7 +22,6 @@ class DocumentGenerator:
        
         generated_text = palm_api_requester.make_api_request(payload)
 
-        #print("Generated Text for :",file_name, generated_text)
         generated_json = self.util.extract_json(generated_text)
         generated_json = json.dumps(generated_json)
         self.util.write_to_file(file_name+".json", generated_json)
