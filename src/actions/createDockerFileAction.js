@@ -1,6 +1,6 @@
 const vscode = require('vscode');
 const TextBisonApiService = require('../service/TextBisonApiService');
-const CompletionsApiService = require('../service/CompletionsApiService');
+const ChatCompletionsApiService = require('../service/ChatCompletionApiService');
 
 const {
    getFilteredPrompt,
@@ -15,7 +15,7 @@ const Prompts = require('../prompts/Prompts');
 
 const createDockerFileAction = () => {
    const { TextBisonApi } = TextBisonApiService();
-   const { CompletionsApi } = CompletionsApiService();
+   const { ChatCompletionApi } = ChatCompletionsApiService();
 
    vscode.commands.registerCommand(
       'CodeXpert.createDockerFile',
@@ -30,7 +30,7 @@ const createDockerFileAction = () => {
             return vscode.window.showErrorMessage('Please set an API_TYPE');
          }
          const selectedApi =
-            selectedApiType === 'GPT' ? CompletionsApi : TextBisonApi;
+            selectedApiType === 'GPT' ? ChatCompletionApi : TextBisonApi;
 
          const envVariableList = extractEnvVariablesFromPrompt(
             Prompts.CREATE_DOCKER_FILE,
