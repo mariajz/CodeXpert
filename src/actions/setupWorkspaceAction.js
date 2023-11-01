@@ -1,4 +1,3 @@
-const fs = require('fs');
 const vscode = require('vscode');
 const {
    generateTemplate,
@@ -7,11 +6,25 @@ const {
    copy_prompts,
 } = require('../helper/helpers');
 
+const items = [
+   {
+      label: 'PaLM Api',
+      description: 'Google',
+   },
+   {
+      label: 'GPT completions Api ',
+      description: 'OpenAI',
+   },
+];
+
 const setupWorkspaceAction = () =>
    vscode.commands.registerCommand(
       'CodeXpert.setupWorkspace',
       async function () {
          generateTemplate('', '.env');
+         const selectedApi = await vscode.window.showQuickPick(items);
+         console.log('selectedApi', selectedApi);
+
          const PALM_API_KEY = await triggerUserInput('PALM_API_KEY');
          if (PALM_API_KEY != undefined) {
             setValueToEnv('PALM_API_KEY', PALM_API_KEY);

@@ -279,6 +279,7 @@ const runPythonScripts = async (workspace_path, script_name, argument) => {
 
    console.log('Python script executed');
 };
+
 const copy_prompts = file_name => {
    let sourceFilePath = path.join(__dirname, '../scripts/' + file_name);
    let destinationFilePath = vscode.workspace.rootPath + '/' + file_name;
@@ -290,6 +291,7 @@ const copy_prompts = file_name => {
       }
    });
 };
+
 module.exports = {
    extractEnvVariablesFromPrompt,
    getFilteredPrompt,
@@ -307,4 +309,5 @@ module.exports = {
    getStagedFilesFullDiff,
    runPythonScripts,
    copy_prompts,
+   showQuickPick,
 };
