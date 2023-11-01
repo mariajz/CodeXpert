@@ -1,10 +1,11 @@
 const axios = require('axios');
 
-const makeApiCall = async ({ url, method, data }) => {
+const makeApiCall = async ({ url, method, data, headers }) => {
    const options = {
       method: method,
       url: url,
       data: data,
+      headers: headers,
    };
 
    try {
