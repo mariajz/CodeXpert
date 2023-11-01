@@ -15,22 +15,32 @@ const Prompts = {
       Use the ##EXECUTEFILEPATH## path as the entry file to build the project.
       Construct the Dockerfile adhering to these guidelines to ensure a smooth application run within the Docker container.`,
    SMART_COMMIT_MESSAGE: `
-      Task: Generate a Commit Message
+   Generate Git commit message
 
-      Instructions:
-      1. You will receive a diff containing the changes made.
-      2. Generate a commit message in Commitizen format.
-      3. The commit message should follow this structure:
-         - Type: [feat], [fix], [chore], [docs], [style], [refactor], [test], or [perf]
-         - Main Line: A concise summary of what the commit accomplishes.
-         - Description: Additional details about the changes (optional but encouraged)
-      4. If description is present, there should compulsorily be a \\n added between the main line and the description
-      
-      Example commit message:
-      [feat] Implement user authentication \\n - Added user login functionality. \\n - Created user registration API.
+   Context:
+   You're preparing to commit changes to your Git repository. The following changes are staged for commit:
+   ##GIT_DIFF##
 
-      Diff:
-      ##GIT_DIFF##
+   Please provide a comprehensive commit message that clearly explains the reasoning behind the modifications. Focus on the "why" rather than just the "what." Consider the following guidelines to ensure your commit message effectively communicates the motivation behind the changes:
+   
+   Guidelines:
+   1. Begin the commit message by clearly explaining the underlying problem, opportunity, or goal that drove the changes related to the staged files.
+   2. Provide detailed context or background information that sheds light on the factors influencing the decision to implement these modifications.
+   3. Use descriptive language to emphasize the impact of the changes and how they contribute to the broader objectives of the project.
+   4. The commit message should have title and optionally a description, seperated by a \\n. The title should be maximum 50 characters and description should be maximum 200 characters.
+   
+   Instructions:
+   1. You will receive a diff containing the changes made.
+   2. Generate a commit message in Commitizen format.
+   3. The commit message should follow this structure:
+      - Type: [feat], [fix], [chore], [docs], [style], [refactor], [test], or [perf]
+      - Main Line: A concise summary of what the commit accomplishes.
+      - Description: Additional details about the changes (optional but encouraged)
+   4. If description is present, there should compulsorily be a \\n added between the main line and the description
+   
+   Example commit message:
+   [feat] Enhance application security by implementing stricter input validations \\n - Address potential vulnerabilities in the login and registration forms. \\n - Recent security audit highlighting potential risks in user input handling.
+
 `,
    CODE_REVIEW: `Read the following diff and review the code, output only the issues with the code : \n\n ##GIT_FULL_DIFF##`,
    EXPLAIN_CODE: `You have been provided with a Spring Boot code base that contains a controller, service, model with multiple methods, endpoints, and request mappings. Your task is to read the source code and document the key methods, endpoints, request mappings, and any important logic within this controller.
