@@ -86,8 +86,8 @@ const smartCommitAction = () =>
 
       const commitMessagePrompt = getCommitMessagePrompt(result);
       const panel = vscode.window.createWebviewPanel(
-         'samplePrompt',
-         'Sample Prompt for Commit Message',
+         'commitMessagePrompt',
+         'Commit Message Prompt',
          vscode.ViewColumn.One,
          {},
       );

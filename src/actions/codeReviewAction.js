@@ -45,7 +45,7 @@ const codeReviewAction = () =>
 
       const codeReviewPrompt = getCodeReviewPrompt(result);
       const promptPanel = vscode.window.createWebviewPanel(
-         'samplePrompt',
+         'codeReviewPrompt',
          'Sample Prompt for Code Review',
          vscode.ViewColumn.One,
          {},

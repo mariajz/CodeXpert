@@ -16,8 +16,8 @@ const explainCurrentCodeAction = () =>
       async function () {
          const explainCodePrompt = getExplainCodePrompt();
          const promptPanel = vscode.window.createWebviewPanel(
-            'samplePrompt',
-            'Sample Prompt for Explaining Code',
+            'explainCurrentCodePrompt',
+            'Sample Prompt for Explaining Current Code',
             vscode.ViewColumn.One,
             {},
          );
