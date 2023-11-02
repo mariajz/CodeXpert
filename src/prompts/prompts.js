@@ -27,7 +27,7 @@ const Prompts = {
    1. Begin the commit message by clearly explaining the underlying problem, opportunity, or goal that drove the changes related to the staged files.
    2. Provide detailed context or background information that sheds light on the factors influencing the decision to implement these modifications.
    3. Use descriptive language to emphasize the impact of the changes and how they contribute to the broader objectives of the project.
-   4. The commit message should have title and optionally a description, seperated by a \\n. The title should be maximum 50 characters and description should be maximum 200 characters.
+   4. The commit message should have title and optionally a description, seperated by a #. 
    
    Instructions:
    1. You will receive a diff containing the changes made.
@@ -36,10 +36,12 @@ const Prompts = {
       - Type: [feat], [fix], [chore], [docs], [style], [refactor], [test], or [perf]
       - Main Line: A concise summary of what the commit accomplishes.
       - Description: Additional details about the changes (optional but encouraged)
-   4. If description is present, there should compulsorily be a \\n added between the main line and the description
+   4. If description is present, there should compulsorily be a # added between the main line and the description. Each line of description should start with a #.
+   5. The title should be maximum 100 characters and each description should be maximum 100 characters. Total commit message should be maximum 500 characters.
+   6. You need not list all the changes in the commit, instead focus on the impact of those changes. 
    
    Example commit message:
-   [feat] Enhance application security by implementing stricter input validations \\n - Address potential vulnerabilities in the login and registration forms. \\n - Recent security audit highlighting potential risks in user input handling.
+   [feat] Enhance application security by implementing stricter input validations # Address potential vulnerabilities in the login and registration forms. # Recent security audit highlighting potential risks in user input handling.
 
 `,
    CODE_REVIEW: `

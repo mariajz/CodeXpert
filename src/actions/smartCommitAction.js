@@ -12,8 +12,11 @@ const { baseHTML } = require('../constants');
 const TextBisonApiService = require('../service/TextBisonApiService');
 const ChatCompletionsApiService = require('../service/ChatCompletionApiService');
 
+const { TextBisonApi } = TextBisonApiService();
+const { ChatCompletionApi } = ChatCompletionsApiService();
+
 const splitCommit = commitMessage => {
-   const commitMessageArray = commitMessage.split('\\n');
+   const commitMessageArray = commitMessage.split('#');
    const commitTitle = commitMessageArray[0];
    const commitDescription =
       commitMessageArray.length > 1
@@ -24,11 +27,18 @@ const splitCommit = commitMessage => {
       commitDescription,
    };
 };
-const makeCommit = async (commitMessage, issueNumber, pairName) => {
-   const { commitTitle, commitDescription } = splitCommit(commitMessage);
+const addPrefix = (commitMessage, issueNumber, pairName) => {
    let issueNumberPrefix = issueNumber !== '' ? `${issueNumber}: ` : '';
    let pairNamePrefix = pairName !== '' ? `${pairName}: ` : '';
-   let commitCommand = `git commit -m "${issueNumberPrefix}${pairNamePrefix}${commitTitle}"`;
+   const mergedCommitMessage = `${issueNumberPrefix}${pairNamePrefix}${commitMessage}`;
+
+   return mergedCommitMessage;
+};
+
+const makeCommit = async commitMessage => {
+   const { commitTitle, commitDescription } = splitCommit(commitMessage);
+
+   let commitCommand = `git commit -m "${commitTitle}"`;
 
    if (commitDescription.length > 0) {
       commitDescription.forEach(description => {
@@ -55,8 +65,6 @@ const getCommitMessagePrompt = diff => {
    );
    return filteredPrompt;
 };
-const { TextBisonApi } = TextBisonApiService();
-const { ChatCompletionApi } = ChatCompletionsApiService();
 
 const smartCommitAction = () =>
    vscode.commands.registerCommand('CodeXpert.smartCommit', async function () {
@@ -95,22 +103,26 @@ const smartCommitAction = () =>
          baseHTML,
          commitMessagePrompt,
       );
-
       let inputPrompt = getStringifiedPrompt(commitMessagePrompt);
+      const issueNumber = await triggerUserInput(
+         'Issue Number / Story ID',
+         true,
+      );
+      const pairName = await triggerUserInput('Pair Name', true);
 
       const commitMessage = await selectedApi(inputPrompt);
 
       if (commitMessage) {
-         const issueNumber = await triggerUserInput(
-            'Issue Number / Story ID',
-            true,
-         );
-         const pairName = await triggerUserInput('Pair Name', true);
+         const filteredCommitMessage = commitMessage.replace(/`/g, '');
 
-         const filteredCommitMessage = commitMessage.replace('```', '');
+         const mergeCommitMessage = addPrefix(
+            filteredCommitMessage,
+            issueNumber,
+            pairName,
+         );
 
          const finalCommitMessage = await vscode.window.showInputBox({
-            value: filteredCommitMessage,
+            value: mergeCommitMessage,
             validateInput: text => {
                if (text.trim() === '') {
                   return 'Commit message cannot be empty';
@@ -126,7 +138,7 @@ const smartCommitAction = () =>
          });
 
          if (finalCommitMessage !== undefined) {
-            makeCommit(finalCommitMessage, issueNumber, pairName);
+            makeCommit(finalCommitMessage);
          }
       }
    });
