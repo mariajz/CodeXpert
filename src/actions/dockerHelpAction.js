@@ -6,7 +6,7 @@ const {
    getHTMLContentForPrompt,
    getValueFromEnv,
    triggerUserInput,
-   executeCommand
+   executeCommand,
 } = require('../helper/helpers');
 const { baseHTML } = require('../constants');
 const Prompts = require('../prompts/Prompts');
@@ -39,27 +39,26 @@ const dockerHelpAction = () => {
       if (userInput != undefined) {
          let filteredPrompt = getDockerHelpPrompt(userInput);
          try {
-            let running_docker_services = await executeCommand("docker ps");
-            if (running_docker_services != undefined && running_docker_services != "") {
-               filteredPrompt = filteredPrompt + "\n" + ' You have below running services from docker ps ' + "\n" + running_docker_services;
+            let running_docker_services = await executeCommand('docker ps');
+            if (
+               running_docker_services != undefined &&
+               running_docker_services != ''
+            ) {
+               filteredPrompt =
+                  filteredPrompt +
+                  '\n' +
+                  ' You have below running services from docker ps ' +
+                  '\n' +
+                  running_docker_services;
             }
-         } catch (error) {
-
-         }
-         const panel = vscode.window.createWebviewPanel(
-            'dockerHelpPrompt',
-            'Docker Help Prompt',
-            vscode.ViewColumn.One,
-            {},
-         );
-         panel.webview.html = getHTMLContentForPrompt(baseHTML, filteredPrompt);
+         } catch (error) {}
          let inputPrompt = getStringifiedPrompt(filteredPrompt);
 
          let result = await selectedApi(inputPrompt);
 
          if (result) {
-            result = result.replace(/`/g, "");
-            result = result.replace("\n", "");
+            result = result.replace(/`/g, '');
+            result = result.replace('\n', '');
             const resultPanel = vscode.window.createWebviewPanel(
                'dockerHelpResult',
                'Docker Command',
@@ -68,21 +67,19 @@ const dockerHelpAction = () => {
             );
 
             await executeCommand(result)
-               .then((stdout) => {
+               .then(stdout => {
                   resultPanel.webview.html = getHTMLContentForPrompt(
                      baseHTML,
-                     result + "\n" + stdout,
+                     result + '\n' + stdout,
                   );
                   //vscode.window.showInformationMessage(stdout);
                })
-               .catch((error )=> {
+               .catch(error => {
                   resultPanel.webview.html = getHTMLContentForPrompt(
                      baseHTML,
                      result,
                   );
                });
-
-
          }
       }
    });
