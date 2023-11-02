@@ -1,5 +1,5 @@
 const vscode = require('vscode');
-const TreeViewProvider = require('./helper/TreeViewProvider');
+const TreeViewProvider = require('./provider/TreeViewProvider');
 const createDockerFileAction = require('./actions/createDockerFileAction');
 const setupWorkspaceAction = require('./actions/setupWorkspaceAction');
 const smartCommitAction = require('./actions/smartCommitAction');
