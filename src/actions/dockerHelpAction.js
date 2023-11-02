@@ -6,6 +6,7 @@ const {
    getHTMLContentForPrompt,
    getValueFromEnv,
    triggerUserInput,
+   executeCommand
 } = require('../helper/helpers');
 const { baseHTML } = require('../constants');
 const Prompts = require('../prompts/Prompts');
@@ -36,7 +37,15 @@ const dockerHelpAction = () => {
          'Type anything you want to generate docker command for: eg. logs',
       );
       if (userInput != undefined) {
-         const filteredPrompt = getDockerHelpPrompt(userInput);
+         let filteredPrompt = getDockerHelpPrompt(userInput);
+         try {
+            let running_docker_services = await executeCommand("docker ps");
+            if (running_docker_services != undefined && running_docker_services != "") {
+               filteredPrompt = filteredPrompt + "\n" + ' You have below running services from docker ps ' + "\n" + running_docker_services;
+            }
+         } catch (error) {
+
+         }
          const panel = vscode.window.createWebviewPanel(
             'dockerHelpPrompt',
             'Docker Help Prompt',
@@ -46,19 +55,34 @@ const dockerHelpAction = () => {
          panel.webview.html = getHTMLContentForPrompt(baseHTML, filteredPrompt);
          let inputPrompt = getStringifiedPrompt(filteredPrompt);
 
-         const result = await selectedApi(inputPrompt);
+         let result = await selectedApi(inputPrompt);
 
          if (result) {
+            result = result.replace(/`/g, "");
+            result = result.replace("\n", "");
             const resultPanel = vscode.window.createWebviewPanel(
                'dockerHelpResult',
                'Docker Command',
                vscode.ViewColumn.One,
                {},
             );
-            resultPanel.webview.html = getHTMLContentForPrompt(
-               baseHTML,
-               result,
-            );
+
+            await executeCommand(result)
+               .then((stdout) => {
+                  resultPanel.webview.html = getHTMLContentForPrompt(
+                     baseHTML,
+                     result + "\n" + stdout,
+                  );
+                  //vscode.window.showInformationMessage(stdout);
+               })
+               .catch((error )=> {
+                  resultPanel.webview.html = getHTMLContentForPrompt(
+                     baseHTML,
+                     result,
+                  );
+               });
+
+
          }
       }
    });

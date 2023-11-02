@@ -9,9 +9,8 @@ import os
 
 
 file_path = sys.argv[1]
-auth_token = sys.argv[2]
 
-util = Util(file_path,auth_token)
+util = Util(file_path)
 
 util.write_logs("Starting to explain the project")
 util.make_directory_if_not_exists("documents")
@@ -21,7 +20,9 @@ document_generator = DocumentGenerator(util)
 util.write_logs("document generator created")
 
 # generate document for all files using google palm api
-document_generator.generate_document_for_all_files_as_json()
+identified_ext = util.identify_project_type_based_on_extension()
+util.write_logs("project identified as "+identified_ext)
+document_generator.generate_document_for_all_files_as_json(identified_ext)
 util.write_logs("document generated for all files")
 # from generated json files, link method calls to their respective files
 

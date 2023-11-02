@@ -2,16 +2,41 @@ import json
 import os
 import re
 import logging
- 
-from palm_api_requester import PalmAPIRequester
+
+from api_requester import APIRequester
 
 class Util:
 
-    def __init__(self, root_path, auth_token):
+    def __init__(self, root_path):
         self.root_path = root_path
-        self.auth_token = auth_token
         logging.basicConfig(filename=root_path+'/log.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
+    def parse_config_file(self):
+        config = {}
+        try:
+            logging.info(self.root_path+"/.env")
+            with open(self.root_path+"/.env", 'r') as file:
+                for line in file:
+                    line = line.strip()
+                    if line and not line.startswith("#"):
+                        key, value = line.split("=", 1)
+                        value = value.replace('"', '')
+                        config[key.strip()] = value.strip()
+        except Exception as e:
+            logging.error("Error parsing config file: "+str(e))
+        return config
+
+    def get_model_type_and_token(self):
+        model_type, auth_token ='',''
+        with open(self.root_path+"/.env", 'r') as f:
+            config_file = self.parse_config_file()
+            model_type = config_file["API_TYPE"]
+            auth_token = config_file["PALM_API_KEY"] if model_type == "PALM" else config_file["GPT_API_KEY"]
+            logging.info("Model type: "+model_type)
+            logging.info("Auth token: "+auth_token)
+        return  [auth_token, model_type]
+    
+    
     def write_logs(self,log):
         logging.info(log)
         
@@ -45,6 +70,18 @@ class Util:
                 if file.endswith(extension):
                     file_names.append(os.path.join(root, file))
         return file_names
+    
+    def identify_project_type_based_on_extension(self):
+        for root, dir, files in os.walk(self.root_path):
+            for file in files:
+                if file.endswith('.java'):
+                    return ".java"
+                if file.endswith('.py'):
+                    return ".py"
+                if file.endswith('.go'):
+                    return ".go"
+                
+        return None
 
     def read_file_as_text(self,file_name):
         with open(file_name, 'r') as f:
@@ -79,7 +116,7 @@ class Util:
         payload = {
                 "prompt": {"text": prompt}
         }
-        return payload
+        return prompt
     
     def get_auth_token(self):
         return self.auth_token
@@ -88,7 +125,8 @@ class Util:
         try:
             json_data =  json.loads(text)
             if isinstance(json_data, str):
-                palm_api_requestor = PalmAPIRequester(self.auth_token)
+                auth_token,model_type = self.util.get_model_type_and_token()[0], self.util.get_model_type_and_token()[1]
+                palm_api_requestor = APIRequester(auth_token,model_type)
                 text = palm_api_requestor.make_api_request(self.create_prompt_payload("prompt_for_json_conversion.txt",text))
                 json_data = self.extract_json(text)
                 return json_data

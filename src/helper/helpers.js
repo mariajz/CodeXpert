@@ -270,9 +270,8 @@ const getStagedFilesFullDiff = async () => {
 const runPythonScripts = async (workspace_path, script_name, argument, context) => {
    const pythonScriptPath =
       path.join(__dirname, '../scripts/' + script_name) + ' ' + workspace_path;
-   let auth_key = getValueFromEnv('PALM_API_KEY');
    await exec(
-      `python3 ${pythonScriptPath} ${auth_key} ${argument}`,
+      `python3 ${pythonScriptPath} ${argument}`,
       (error, stdout, stderr) => {
          if (error) {
             console.error(`Error: ${error.message}`);

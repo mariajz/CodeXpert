@@ -9,18 +9,19 @@ import os
 
 
 file_path = (sys.argv[1])
-auth_token = sys.argv[2]
 
 
-util = Util(file_path,auth_token)
+util = Util(file_path)
 
 util.make_directory_if_not_exists("documents")
 
 document_generator = DocumentGenerator(util)
+
 # generate document for all files using google palm api
-document_generator.generate_document_for_all_files_as_json()
+identified_ext = util.identify_project_type_based_on_extension()
+document_generator.generate_document_for_all_files_as_json(identified_ext)
 # from generated json files, link method calls to their respective files
-file_to_explain = sys.argv[3]
+file_to_explain = sys.argv[2]
 file_to_explain = util.get_file_name_from_path(file_to_explain)
 file_to_explain = file_to_explain.split('.')[0]
 
