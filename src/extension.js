@@ -1,5 +1,5 @@
 const vscode = require('vscode');
-const TreeViewProvider = require('./helper/TreeViewProvider');
+const TreeViewProvider = require('./provider/TreeViewProvider');
 const createDockerFileAction = require('./actions/createDockerFileAction');
 const setupWorkspaceAction = require('./actions/setupWorkspaceAction');
 const smartCommitAction = require('./actions/smartCommitAction');
@@ -8,12 +8,14 @@ const explainCodeAction = require('./actions/explainCodeAction');
 const explainCurrentCodeAction = require('./actions/explainCurrentCodeAction');
 const toggleApiTypeAction = require('./actions/toggleApiTypeAction');
 const dockerHelpAction = require('./actions/dockerHelpAction');
+const updateDockerfileAction = require('./actions/updateDockerFileAction');
 
 const activate = async context => {
    toggleApiTypeAction();
    setupWorkspaceAction();
    createDockerFileAction();
    dockerHelpAction();
+   updateDockerfileAction();
    smartCommitAction();
    codeReviewAction();
    explainCodeAction();

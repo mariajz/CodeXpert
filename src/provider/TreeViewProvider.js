@@ -39,6 +39,10 @@ class TreeViewProvider {
                title: 'Docker Help',
             }),
             new CustomButtonTreeItem({
+               command: 'CodeXpert.updateDockerfile',
+               title: 'Update Dockerfile',
+            }),
+            new CustomButtonTreeItem({
                command: 'CodeXpert.smartCommit',
                title: 'Smart Commit',
             }),

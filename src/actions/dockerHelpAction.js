@@ -45,14 +45,21 @@ const dockerHelpAction = () => {
          );
          panel.webview.html = getHTMLContentForPrompt(baseHTML, filteredPrompt);
          let inputPrompt = getStringifiedPrompt(filteredPrompt);
+
          const result = await selectedApi(inputPrompt);
-         const resultPanel = vscode.window.createWebviewPanel(
-            'dockerHelpResult',
-            'Docker Command',
-            vscode.ViewColumn.One,
-            {},
-         );
-         resultPanel.webview.html = getHTMLContentForPrompt(baseHTML, result);
+
+         if (result) {
+            const resultPanel = vscode.window.createWebviewPanel(
+               'dockerHelpResult',
+               'Docker Command',
+               vscode.ViewColumn.One,
+               {},
+            );
+            resultPanel.webview.html = getHTMLContentForPrompt(
+               baseHTML,
+               result,
+            );
+         }
       }
    });
 };

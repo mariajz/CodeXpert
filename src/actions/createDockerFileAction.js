@@ -1,7 +1,6 @@
 const vscode = require('vscode');
 const TextBisonApiService = require('../service/TextBisonApiService');
 const ChatCompletionsApiService = require('../service/ChatCompletionApiService');
-
 const {
    getFilteredPrompt,
    getStringifiedPrompt,
@@ -43,8 +42,8 @@ const createDockerFileAction = () => {
             );
 
             const panel = vscode.window.createWebviewPanel(
-               'samplePrompt',
-               'Sample Prompt',
+               'createDockerFilePrompt',
+               'Create Dockerfile Prompt',
                vscode.ViewColumn.One,
                {},
             );

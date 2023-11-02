@@ -14,7 +14,7 @@ const explainCodeAction = () =>
    vscode.commands.registerCommand('CodeXpert.explainCode', async function () {
       const explainCodePrompt = getExplainCodePrompt();
       const promptPanel = vscode.window.createWebviewPanel(
-         'samplePrompt',
+         'explainCodePrompt',
          'Sample Prompt for Explaining Code',
          vscode.ViewColumn.One,
          {},
@@ -25,7 +25,11 @@ const explainCodeAction = () =>
       );
 
       // uncomment this to test python scripts
-       runPythonScripts(vscode.workspace.rootPath,"explain_whole_project.py","");
+      runPythonScripts(
+         vscode.workspace.rootPath,
+         'explain_whole_project.py',
+         '',
+      );
    });
 
 module.exports = explainCodeAction;
