@@ -42,7 +42,35 @@ const Prompts = {
    [feat] Enhance application security by implementing stricter input validations \\n - Address potential vulnerabilities in the login and registration forms. \\n - Recent security audit highlighting potential risks in user input handling.
 
 `,
-   CODE_REVIEW: `Read the following diff and review the code, output only the issues with the code : \n\n ##GIT_FULL_DIFF##`,
+   CODE_REVIEW: `
+   You are working on a codebase and need to conduct a comprehensive code review. During the review, you need to look for the following issues:
+
+   1. Violations of SOLID principles.
+   2. Any potential security violations or insecure coding practices.
+   3. Instances of anti-design patterns that need to be refactored.
+   4. Any potential memory leaks that may occur within the code.
+   5. Are variable and function names clear and descriptive?
+   6. Is the code properly indented and formatted following the project's style guide?
+   7. Does the code accomplish its intended purpose?
+   8. Are there any logical errors or edge cases that need attention?
+   9. Are there any bottlenecks or inefficiencies that should be addressed?
+   10. Are data structures and algorithms used appropriately?
+   11. Are exceptions and error handling mechanisms in place where necessary?
+   12. Are error messages informative and helpful?
+   13. Are there sufficient unit tests covering the code?
+   14. Is there inline documentation explaining complex logic or algorithms?
+   15. Are there any potential security vulnerabilities or risks in the code?
+   16. Is sensitive information handled appropriately?
+   17. Is the code modular and organized for easy maintenance and future extensions?
+   18. Are there any code smells or anti-patterns that should be addressed?
+
+   You're tasked with thoroughly examining the codebase and providing detailed feedback on the identified issues. Please review the code snippet below and provide actionable recommendations for each issue you encounter.
+
+   Code Snippet diff:
+   ##GIT_FULL_DIFF##
+
+   Please thoroughly assess the code, identify any violations or issues related to the specified criteria, and suggest appropriate solutions for each problem.
+`,
    EXPLAIN_CODE: `You have been provided with a Spring Boot code base that contains a controller, service, model with multiple methods, endpoints, and request mappings. Your task is to read the source code and document the key methods, endpoints, request mappings, and any important logic within this controller.
 
    ## Instructions 
