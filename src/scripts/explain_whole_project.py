@@ -35,7 +35,7 @@ try:
         util.write_logs("Code structure generated")
         data = json.load(json_file) 
         util.write_logs("Code structure written to file")
-        util.write_to_file("code_structure.txt",tree_structure.create_tree_structure(data))
+        util.write_to_file("code_structure.txt",tree_structure.construct_html_tree_structure(data))
         util.write_logs("Code tree structure written to file")
         print(util.read_file_as_text(file_path+"/documents/code_structure.txt"))
 except Exception as e:

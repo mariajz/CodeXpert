@@ -5,7 +5,7 @@ const { regexMap, nonEmptyValues } = require('../constants/constants');
 const dotenv = require('dotenv');
 const Prompts = require('../prompts/Prompts');
 const { exec } = require('child_process');
-const { baseHTML } = require('../constants');
+const { baseHTML, treeHTML } = require('../constants');
 
 const getFilteredPrompt = (prompt, envVariableList) => {
    let filteredPrompt = prompt;
@@ -72,6 +72,12 @@ const getHTMLContentForPrompt = (baseHTML, filteredPrompt) => {
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
    const result = baseHTML.replace(/FILTERED_PROMPT/g, escapedPrompt);
+   return result;
+};
+
+const constructHTMLContent = (baseHTML, tagToBeIncluded, replacementKey) => {
+   
+   const result = baseHTML.replace(replacementKey, tagToBeIncluded);
    return result;
 };
 
@@ -261,7 +267,7 @@ const getStagedFilesFullDiff = async () => {
    return result;
 };
 
-const runPythonScripts = async (workspace_path, script_name, argument) => {
+const runPythonScripts = async (workspace_path, script_name, argument, context) => {
    const pythonScriptPath =
       path.join(__dirname, '../scripts/' + script_name) + ' ' + workspace_path;
    let auth_key = getValueFromEnv('PALM_API_KEY');
@@ -281,9 +287,12 @@ const runPythonScripts = async (workspace_path, script_name, argument) => {
             'Code Explanation',
             'Code Explanation',
             vscode.ViewColumn.One,
-            {},
+            {enableScripts: true, },
          );
-         promptPanel.webview.html = getHTMLContentForPrompt(baseHTML, stdout);
+         const scriptUri = promptPanel.webview.asWebviewUri( vscode.Uri.joinPath(context.extensionUri, 'media', 'treeViewer.js') ); 
+         let html =  constructHTMLContent(treeHTML, stdout, 'FILE_TREE');
+         html = constructHTMLContent(html, scriptUri, 'SCRIPT_URI');
+         promptPanel.webview.html = html;
       },
    );
 

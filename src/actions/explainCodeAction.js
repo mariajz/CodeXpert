@@ -10,7 +10,7 @@ const getExplainCodePrompt = () => {
    return Prompts.EXPLAIN_CODE;
 };
 
-const explainCodeAction = () =>
+const explainCodeAction = (context) =>
    vscode.commands.registerCommand('CodeXpert.explainCode', async function () {
       const explainCodePrompt = getExplainCodePrompt();
       const promptPanel = vscode.window.createWebviewPanel(
@@ -29,6 +29,7 @@ const explainCodeAction = () =>
          vscode.workspace.rootPath,
          'explain_whole_project.py',
          '',
+         context,
       );
    });
 

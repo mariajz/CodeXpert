@@ -25,6 +25,32 @@ class TreeStructure:
             self.util.write_logs(f"{pre}{node_name}"+"\n")
         return tree_structure
     
+    def html_tree(self,data):
+        html = ''
+        for key, value in data.items():
+            
+            html = html + '<li class="folder folder-open">' + key 
+
+            if isinstance(value, dict):
+                html = html + '<ul>'
+                html = html + self.html_tree(value)
+                html = html + '</ul>'
+            else:
+                html = html + '<ul>'
+                html = html + '<li class="file">' + value + '</li>'
+                html = html + '</ul>'
+
+            html = html + '</li>'
+        
+        return html
+    
+    def construct_html_tree_structure(self,json_data):
+        html = ""
+        for single_node in json_data:
+            html = html + self.html_tree(single_node)
+        return html
+
+    
 
 
 

@@ -18,8 +18,8 @@ const activate = async context => {
    updateDockerfileAction();
    smartCommitAction();
    codeReviewAction();
-   explainCodeAction();
-   explainCurrentCodeAction();
+   explainCodeAction(context);
+   explainCurrentCodeAction(context);
 
    let treeViewProvider = new TreeViewProvider(context);
    vscode.window.registerTreeDataProvider('codexpert', treeViewProvider);

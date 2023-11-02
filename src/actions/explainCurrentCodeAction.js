@@ -10,7 +10,7 @@ const getExplainCodePrompt = () => {
    return Prompts.EXPLAIN_CODE;
 };
 
-const explainCurrentCodeAction = () =>
+const explainCurrentCodeAction = (context) =>
    vscode.commands.registerCommand(
       'CodeXpert.explainCurrentCode',
       async function () {
@@ -30,6 +30,7 @@ const explainCurrentCodeAction = () =>
             vscode.workspace.rootPath,
             'explain_given_file.py',
             argument,
+            context,
          );
       },
    );
