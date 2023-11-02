@@ -5,10 +5,12 @@ const {
    getStringifiedPrompt,
    executeCommand,
    triggerUserInput,
+   getValueFromEnv,
 } = require('../helper/helpers');
 const Prompts = require('../prompts/Prompts');
 const { baseHTML } = require('../constants');
 const TextBisonApiService = require('../service/TextBisonApiService');
+const ChatCompletionsApiService = require('../service/ChatCompletionApiService');
 
 const splitCommit = commitMessage => {
    const commitMessageArray = commitMessage.split('\\n');
@@ -54,6 +56,7 @@ const getCommitMessagePrompt = diff => {
    return filteredPrompt;
 };
 const { TextBisonApi } = TextBisonApiService();
+const { ChatCompletionApi } = ChatCompletionsApiService();
 
 const smartCommitAction = () =>
    vscode.commands.registerCommand('CodeXpert.smartCommit', async function () {
@@ -74,6 +77,13 @@ const smartCommitAction = () =>
          );
       }
 
+      const selectedApiType = getValueFromEnv('API_TYPE');
+      if (selectedApiType === undefined) {
+         return vscode.window.showErrorMessage('Please set an API_TYPE');
+      }
+      const selectedApi =
+         selectedApiType === 'GPT' ? ChatCompletionApi : TextBisonApi;
+
       const commitMessagePrompt = getCommitMessagePrompt(result);
       const panel = vscode.window.createWebviewPanel(
          'samplePrompt',
@@ -88,34 +98,36 @@ const smartCommitAction = () =>
 
       let inputPrompt = getStringifiedPrompt(commitMessagePrompt);
 
-      const commitMessage = await TextBisonApi(inputPrompt);
+      const commitMessage = await selectedApi(inputPrompt);
 
-      const issueNumber = await triggerUserInput(
-         'Issue Number / Story ID',
-         true,
-      );
-      const pairName = await triggerUserInput('Pair Name', true);
+      if (commitMessage) {
+         const issueNumber = await triggerUserInput(
+            'Issue Number / Story ID',
+            true,
+         );
+         const pairName = await triggerUserInput('Pair Name', true);
 
-      const filteredCommitMessage = commitMessage.replace('```', '');
+         const filteredCommitMessage = commitMessage.replace('```', '');
 
-      const finalCommitMessage = await vscode.window.showInputBox({
-         value: filteredCommitMessage,
-         validateInput: text => {
-            if (text.trim() === '') {
-               return 'Commit message cannot be empty';
-            }
-            if (text == undefined) {
-               vscode.window.showErrorMessage(
-                  'Input sequence cancelled, terminating...',
-               );
-               return undefined;
-            }
-            return null;
-         },
-      });
+         const finalCommitMessage = await vscode.window.showInputBox({
+            value: filteredCommitMessage,
+            validateInput: text => {
+               if (text.trim() === '') {
+                  return 'Commit message cannot be empty';
+               }
+               if (text == undefined) {
+                  vscode.window.showErrorMessage(
+                     'Input sequence cancelled, terminating...',
+                  );
+                  return undefined;
+               }
+               return null;
+            },
+         });
 
-      if (finalCommitMessage !== undefined) {
-         makeCommit(finalCommitMessage, issueNumber, pairName);
+         if (finalCommitMessage !== undefined) {
+            makeCommit(finalCommitMessage, issueNumber, pairName);
+         }
       }
    });
 

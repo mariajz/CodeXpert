@@ -3,16 +3,19 @@ const {
    getStagedFilesFullDiff,
    getHTMLContentForPrompt,
    getStringifiedPrompt,
+   getValueFromEnv,
 } = require('../helper/helpers');
 const Prompts = require('../prompts/Prompts');
 const { baseHTML } = require('../constants');
 const TextBisonApiService = require('../service/TextBisonApiService');
+const ChatCompletionsApiService = require('../service/ChatCompletionApiService');
 
 const getCodeReviewPrompt = diff => {
    let filteredPrompt = Prompts.CODE_REVIEW.replace('##GIT_FULL_DIFF##', diff);
    return filteredPrompt;
 };
 const { TextBisonApi } = TextBisonApiService();
+const { ChatCompletionApi } = ChatCompletionsApiService();
 
 const codeReviewAction = () =>
    vscode.commands.registerCommand('CodeXpert.codeReview', async function () {
@@ -33,6 +36,13 @@ const codeReviewAction = () =>
          );
       }
 
+      const selectedApiType = getValueFromEnv('API_TYPE');
+      if (selectedApiType === undefined) {
+         return vscode.window.showErrorMessage('Please set an API_TYPE');
+      }
+      const selectedApi =
+         selectedApiType === 'GPT' ? ChatCompletionApi : TextBisonApi;
+
       const codeReviewPrompt = getCodeReviewPrompt(result);
       const promptPanel = vscode.window.createWebviewPanel(
          'samplePrompt',
@@ -47,18 +57,20 @@ const codeReviewAction = () =>
 
       let inputPrompt = getStringifiedPrompt(codeReviewPrompt);
 
-      const reviews = await TextBisonApi(inputPrompt);
+      const reviews = await selectedApi(inputPrompt);
 
-      const reviewedCodePanel = vscode.window.createWebviewPanel(
-         'codeReviewResults',
-         'Code Review Results',
-         vscode.ViewColumn.One,
-         {},
-      );
-      reviewedCodePanel.webview.html = getHTMLContentForPrompt(
-         baseHTML,
-         reviews,
-      );
+      if (reviews) {
+         const reviewedCodePanel = vscode.window.createWebviewPanel(
+            'codeReviewResults',
+            'Code Review Results',
+            vscode.ViewColumn.One,
+            {},
+         );
+         reviewedCodePanel.webview.html = getHTMLContentForPrompt(
+            baseHTML,
+            reviews,
+         );
+      }
    });
 
 module.exports = codeReviewAction;
