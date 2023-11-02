@@ -81,7 +81,9 @@ const Prompts = {
    2. Create a docker command based on the user input.
 
    User input is the following: ##DOCKER_HELP##`,
-   UPDATE_DOCKER: `Task: Update Dockerfile
+   ISSUES: `Issues User Reported with the above dockerfile or what the user wants to update : ##ISSUES##`,
+   UPDATE_DOCKER: `
+   Task: Update Dockerfile
 
    Description:
    You have been tasked with updating a Dockerfile for a project. The Dockerfile is used to build a containerized application. The goal is to make necessary changes or improvements to the Dockerfile to ensure the application runs smoothly and efficiently within the container.
@@ -101,6 +103,8 @@ const Prompts = {
    Existing Dockerfile Content:
 
    ##DOCKERFILE##
+
+   ##ISSUES##
 
    Please provide the updated Dockerfile with your recommended changes along with explanations for each modification. If a change is not necessary, please state so. If you are unable to provide a solution, please state so and provide a brief explanation of why you were unable to complete the task. 
 

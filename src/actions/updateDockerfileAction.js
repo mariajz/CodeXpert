@@ -6,15 +6,23 @@ const {
    getHTMLContentForPrompt,
    getValueFromEnv,
    readFileContent,
+   triggerUserInput,
 } = require('../helper/helpers');
 const { baseHTML } = require('../constants');
 const Prompts = require('../prompts/Prompts');
 
-const getUpdateDockerfilePrompt = content => {
+const getUpdateDockerfilePrompt = (dockerfileContent, issues = '') => {
    let filteredPrompt = Prompts.UPDATE_DOCKER.replace(
       '##DOCKERFILE##',
-      content,
+      dockerfileContent,
    );
+   if (issues != '') {
+      filteredPrompt = filteredPrompt
+         .replace('##ISSUES##', Prompts.ISSUES)
+         .replace('##ISSUES##', issues);
+   } else {
+      filteredPrompt = filteredPrompt.replace('##ISSUES##', '');
+   }
    return filteredPrompt;
 };
 
@@ -44,7 +52,15 @@ const updateDockerfileAction = () => {
             return vscode.window.showErrorMessage('No Dockerfile found');
          }
 
-         const filteredPrompt = getUpdateDockerfilePrompt(dockerFileContent);
+         const issues = await triggerUserInput(
+            '[optional] Enter what you want to update or any issues you faced with the dockerfile',
+            true,
+         );
+
+         const filteredPrompt = getUpdateDockerfilePrompt(
+            dockerFileContent,
+            issues,
+         );
          const panel = vscode.window.createWebviewPanel(
             'updateDockerfilePrompt',
             'Update Dockerfile Prompt',
