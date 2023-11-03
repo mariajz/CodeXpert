@@ -14,7 +14,7 @@ class Util:
     def parse_config_file(self):
         config = {}
         try:
-            logging.info(self.root_path+"/.env")
+            #logging.info(self.root_path+"/.env")
             with open(self.root_path+"/.env", 'r') as file:
                 for line in file:
                     line = line.strip()
@@ -32,8 +32,7 @@ class Util:
             config_file = self.parse_config_file()
             model_type = config_file["API_TYPE"]
             auth_token = config_file["PALM_API_KEY"] if model_type == "PALM" else config_file["GPT_API_KEY"]
-            logging.info("Model type: "+model_type)
-            logging.info("Auth token: "+auth_token)
+            
         return  [auth_token, model_type]
     
     
@@ -95,10 +94,10 @@ class Util:
         pattern = r'\[.*\]' 
         json_matches = re.findall(pattern, text, re.DOTALL)
         if json_matches:
-            extracted_json = json_matches[0]
-            extracted_json = extracted_json.replace("\n","")
-            extracted_json = extracted_json.replace("\\","")
             try:
+                extracted_json = json_matches[0]
+                extracted_json = extracted_json.replace("\n","")
+                extracted_json = extracted_json.replace("\\","")
                 extracted_json = json.loads(extracted_json)
             except:
                 logging.error("Error loading json" +extracted_json)
