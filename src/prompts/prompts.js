@@ -15,34 +15,27 @@ const Prompts = {
       Use the ##EXECUTEFILEPATH## path as the entry file to build the project.
       Construct the Dockerfile adhering to these guidelines to ensure a smooth application run within the Docker container.`,
    SMART_COMMIT_MESSAGE: `
-   Generate Git commit message
-
-   Context:
-   You're preparing to commit changes to your Git repository. The following changes are staged for commit:
+   Generate a Git commit message that emphasizes the impact of the changes rather than just listing them. Focus on the "why" behind the modifications. 
+   The following changes are staged for commit:
    ##GIT_DIFF##
 
-   Please provide a comprehensive commit message that clearly explains the reasoning behind the modifications. Focus on the "why" rather than just the "what." Consider the following guidelines to ensure your commit message effectively communicates the motivation behind the changes:
-   
+   Consider the following guidelines and Instructions and generate a commit message.
+
    Guidelines:
-   1. Begin the commit message by clearly explaining the underlying problem, opportunity, or goal that drove the changes related to the staged files.
-   2. Provide detailed context or background information that sheds light on the factors influencing the decision to implement these modifications.
-   3. Use descriptive language to emphasize the impact of the changes and how they contribute to the broader objectives of the project.
-   4. The commit message should have title and optionally a description, seperated by a #. 
+   1. Clearly explain the underlying problem, opportunity, or goal that drove the changes.
+   2. Provide detailed context or background information influencing the decision to implement these modifications.
+   3. Use descriptive language to emphasize how the changes contribute to the broader objectives of the project.
    
    Instructions:
-   1. You will receive a diff containing the changes made.
+   1. You will receive a diff containing the changes made. Lines starting with '+' indicate additions and lines starting with '-' indicate deletions.
    2. Generate a commit message in Commitizen format.
-   3. The commit message should follow this structure:
-      - Type: [feat], [fix], [chore], [docs], [style], [refactor], [test], or [perf]
-      - Main Line: A concise summary of what the commit accomplishes.
-      - Description: Additional details about the changes (optional but encouraged)
-   4. If description is present, there should compulsorily be a # added between the main line and the description. Each line of description should start with a #.
-   5. The title should be maximum 100 characters and each description should be maximum 100 characters. Total commit message should be maximum 500 characters.
-   6. You need not list all the changes in the commit, instead focus on the impact of those changes. 
+   3. The commit message should have a title and optionally a description, separated by a '#'.
+   4. Title: Type (e.g., [feat], [fix], [chore], [docs], [style], [refactor], [test], or [perf]) followed by a concise summary (maximum 100 characters).
+   5. Description (optional): Additional details about the changes, focusing on the impact (each line starting with '#' and maximum 100 characters).
+   6. The title and description combined should not exceed 500 characters. If the message exceeds 500 characters, truncate it.
    
    Example commit message:
-   [feat] Enhance application security by implementing stricter input validations # Address potential vulnerabilities in the login and registration forms. # Recent security audit highlighting potential risks in user input handling.
-
+   [feat] Enhance application security by implementing stricter input validations # Address potential vulnerabilities in the login and registration forms. # Recent security audit highlighted potential risks in user input handling.   
 `,
    CODE_REVIEW: `
    You are working on a codebase and need to conduct a comprehensive code review. During the review, you need to look for the following issues:
