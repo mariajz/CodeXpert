@@ -50,7 +50,7 @@ class TreeViewProvider {
                tooltip: 'Get help with docker commands',
             }),
             new CustomButtonTreeItem({
-               command: 'CodeXpert.updateDockerfile',
+               command: 'CodeXpert.updateDockerfile(beta)',
                title: 'Update Dockerfile',
                tooltip: 'Get suggestions for your existing dockerfile',
             }),

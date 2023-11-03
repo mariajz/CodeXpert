@@ -72,6 +72,8 @@ const Prompts = {
    ##GIT_FULL_DIFF##
 
    Please thoroughly assess the code, identify any violations or issues related to the specified criteria, and suggest appropriate solutions for each problem.
+
+   Also provide the corrected code which solves the issues you have identified.
 `,
    EXPLAIN_CODE: `You have been provided with a Spring Boot code base that contains a controller, service, model with multiple methods, endpoints, and request mappings. Your task is to read the source code and document the key methods, endpoints, request mappings, and any important logic within this controller.
 
