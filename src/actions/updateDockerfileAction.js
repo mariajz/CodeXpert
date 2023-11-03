@@ -42,12 +42,12 @@ const updateDockerfileAction = () => {
          if (selectedApiType === undefined) {
             return vscode.window.showErrorMessage('Please set an API_TYPE');
          }
-         const selectedApi =
-            selectedApiType === 'GPT' ? ChatCompletionApi : TextBisonApi;
+         // const selectedApi =
+         //    selectedApiType === 'GPT' ? ChatCompletionApi : TextBisonApi;
 
          let dockerFileContent;
          try {
-            dockerFileContent = await readFileContent('.dockerfile');
+            dockerFileContent = await readFileContent('Dockerfile');
          } catch (err) {
             return vscode.window.showErrorMessage('No Dockerfile found');
          }

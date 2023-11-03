@@ -42,7 +42,7 @@ class TreeViewProvider {
             new CustomButtonTreeItem({
                command: 'CodeXpert.createDockerFile',
                title: 'Create Docker File',
-               tooltip: 'Create a .dockerfile with minimal inputs',
+               tooltip: 'Create a Dockerfile with minimal inputs',
             }),
             new CustomButtonTreeItem({
                command: 'CodeXpert.dockerHelp',
@@ -50,8 +50,8 @@ class TreeViewProvider {
                tooltip: 'Get help with docker commands',
             }),
             new CustomButtonTreeItem({
-               command: 'CodeXpert.updateDockerfile(beta)',
-               title: 'Update Dockerfile',
+               command: 'CodeXpert.updateDockerfile',
+               title: 'Update Dockerfile (beta)',
                tooltip: 'Get suggestions for your existing dockerfile',
             }),
             new CustomButtonTreeItem({
