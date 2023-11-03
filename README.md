@@ -14,7 +14,7 @@ This project is an experimental endeavor for the Thoughtworks AI4SoftwareDeliver
 
 -  `Toggle Api Type` : Allows you to toggle between PaLM Api (Free) and Open AI Code Completions Api (Paid)
 -  `Setup Workspace` : Setup the keys required for the extension
--  `Create Docker File` : Create a `.dockerfile` with minimal inputs
+-  `Create Docker File` : Create a `Dockerfile` with minimal inputs
 -  `Docker Help` : Get any docker command
 -  `Update DockerFile` : Get suggestions for your existing dockerfile,
 -  `Smart Commit` : Create a commit message from the staged files
