@@ -53,7 +53,7 @@ const createDockerFileAction = () => {
             );
 
             let inputPrompt = getStringifiedPrompt(filteredPrompt);
-            selectedApi(inputPrompt, '.dockerfile');
+            selectedApi(inputPrompt, 'Dockerfile');
          }
       },
    );
