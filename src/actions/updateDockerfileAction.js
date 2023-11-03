@@ -69,21 +69,22 @@ const updateDockerfileAction = () => {
          );
          panel.webview.html = getHTMLContentForPrompt(baseHTML, filteredPrompt);
 
-         let inputPrompt = getStringifiedPrompt(dockerFileContent);
-         const result = await selectedApi(inputPrompt);
+         // to be tested further before enabling
+         // let inputPrompt = getStringifiedPrompt(dockerFileContent);
+         // const result = await selectedApi(inputPrompt);
 
-         if (result) {
-            const resultPanel = vscode.window.createWebviewPanel(
-               'updateDockerfileResult',
-               'Update Dockerfile Result',
-               vscode.ViewColumn.One,
-               {},
-            );
-            resultPanel.webview.html = getHTMLContentForPrompt(
-               baseHTML,
-               result,
-            );
-         }
+         // if (result) {
+         //    const resultPanel = vscode.window.createWebviewPanel(
+         //       'updateDockerfileResult',
+         //       'Update Dockerfile Result',
+         //       vscode.ViewColumn.One,
+         //       {},
+         //    );
+         //    resultPanel.webview.html = getHTMLContentForPrompt(
+         //       baseHTML,
+         //       result,
+         //    );
+         // }
       },
    );
 };

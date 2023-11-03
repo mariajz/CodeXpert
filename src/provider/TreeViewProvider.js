@@ -51,7 +51,7 @@ class TreeViewProvider {
             }),
             new CustomButtonTreeItem({
                command: 'CodeXpert.updateDockerfile',
-               title: 'Update Dockerfile',
+               title: 'Update Dockerfile (beta)',
                tooltip: 'Get suggestions for your existing dockerfile',
             }),
             new CustomButtonTreeItem({
