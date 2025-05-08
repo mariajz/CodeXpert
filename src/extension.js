@@ -9,6 +9,7 @@ const explainCurrentCodeAction = require('./actions/explainCurrentCodeAction');
 const toggleApiTypeAction = require('./actions/toggleApiTypeAction');
 const dockerHelpAction = require('./actions/dockerHelpAction');
 const updateDockerfileAction = require('./actions/updateDockerFileAction');
+const scanSecretsAction = require('./actions/scanSecretsAction');
 
 const activate = async context => {
    toggleApiTypeAction();
@@ -20,6 +21,7 @@ const activate = async context => {
    codeReviewAction();
    explainCodeAction(context);
    explainCurrentCodeAction(context);
+   scanSecretsAction(context);
 
    let treeViewProvider = new TreeViewProvider(context);
    vscode.window.registerTreeDataProvider('codexpert', treeViewProvider);
